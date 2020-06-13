@@ -1,0 +1,39 @@
+<div class="card mb-4 shadow-sm">
+	<div class="card-header">
+		<h4 class="my-0 font-weight-normal">Alta de Turno</h4>
+		<form class="form-style-7">
+			<ul>
+				<li>
+					<label for="name"> Paciente </label>
+					<input type="text" name="name" [(ngModel)]="turno.cliente">
+					<span>Nombre del paciente</span>
+				</li>
+				<li>
+					<label for="name">Documento</label>
+					<input type="text" name="name" [(ngModel)]="turno.documento" readonly>
+					<span>Documento</span>
+				</li>
+				<li>
+					<label for="tipo">Especialista</label>
+					<select id="cars" name="tipo" [(ngModel)]="turno.especialista">
+						<option value="{{p.name}}" *ngFor="let p of especialistas">{{p.name}}</option>
+					</select>
+				</li>
+				<li>
+					<label for="url">Descripcion</label>
+					<textarea name="url" maxlength="280"  [(ngModel)]="turno.descripcion"> </textarea>
+					<span>Descripcion</span>
+				</li>
+				<li>
+					<label for="url">Fecha de turno</label>
+					<input type="date" name="url" maxlength="100"  [(ngModel)]="turno.fecha">
+					<span>fecha de turno</span>
+				</li>
+				<!--span>No hay presupuesto para spinner, primero dar de alta la pelicula y despues seleccionar el turno (darle unos segundos por las llamadas a BD)</!--span-->
+
+				<li>
+					<button type="button" class="btn btn-lg btn-block btn-primary" (click)="crear()">Alta</button>
+				</li>
+			</ul>
+		</form>
+	</div>
