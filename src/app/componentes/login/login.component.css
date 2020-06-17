@@ -137,6 +137,13 @@ input {
   }
 }
 
+.captcha{
+  display: block;
+  margin: 1rem auto;
+  min-width: 1px;
+  padding: .25rem;
+}
+
 
 
 

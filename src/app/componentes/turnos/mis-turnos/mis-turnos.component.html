@@ -1,0 +1,29 @@
+<table class="table table-hover table-dark">
+	<thead>
+	  <tr>
+		<th scope="col">#</th>
+		<th class="thFilter" scope="col" (click)="orderBy('Especialidad')">Especialidad</th>
+		<th class="thFilter" scope="col" (click)="orderBy('Fecha')">Fecha</th>
+		<th class="thFilter" scope="col" (click)="orderBy('Nombre')">Nombre</th>
+		<th scope="col">Documento</th>
+		<th scope="col">Foto</th>
+		<th scope="col">Estado</th>
+		<th scope="col">Ir a detalles</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr *ngFor="let turno of turnos; let index=index; let odd=odd; let even=even;">
+		<th scope="row">{{index+1}}</th>
+		
+		<td>{{turno.especialista}}</td>
+		<td>{{turno.fecha}}</td>
+		<td *ngIf="turno.asignado != null">{{turno.asignado.apellido}}, {{turno.asignado.nombre}}</td>
+		<td *ngIf="turno.asignado == null"> Turno aun no asignado </td>
+		<td>{{turno.documento}}</td>
+		<td *ngIf="turno.cliente"><img src="{{turno.cliente.foto}}" width="250px" height="150px"></td>
+		<td style="color:aquamarine">{{turno.estado}}</td>
+		<td>	<button type="button" class="btn btn-lg btn-block btn-primary" (click)="seleccionar(turno)">Seleccionar</button>
+		</td>
+	  </tr>
+	</tbody>
+  </table>

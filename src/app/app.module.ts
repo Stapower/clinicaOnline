@@ -1,3 +1,4 @@
+import { CaptchaValidationService } from './services/captcha-validation.service';
 import { DataBaseConnectionService } from './services/database-connection.service';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,14 +16,30 @@ import { ReactiveFormsModule } from '@angular/forms';
 import firebaseConfig from '../environments/environment';
 import { AltaComponent } from './componentes/turnos/alta/alta.component';
 import { HttpClientModule }    from '@angular/common/http';
+import { ListadoComponent } from './componentes/turnos/listado/listado.component';
+import { TurnoComponent } from './componentes/turnos/turno/turno.component';
+import { MisTurnosComponent } from './componentes/turnos/mis-turnos/mis-turnos.component';
+import { UsuarioComponent } from './componentes/usuario/usuario.component';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import{PdfMakeWrapper} from "pdfmake-wrapper";
+PdfMakeWrapper.setFonts(pdfFonts);
 
 
+//cliente//6LcaBKYZAAAAADVMh2H0co3Qlf2-s216cLUpKAtW
+//sv//6LcaBKYZAAAAAGjFK2TIdkqv4YEj109D9Q27E275
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    AltaComponent
+    AltaComponent,
+    ListadoComponent,
+    TurnoComponent,
+    MisTurnosComponent,
+    UsuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -31,9 +48,11 @@ import { HttpClientModule }    from '@angular/common/http';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(firebaseConfig.firebase),
     AngularFireAuthModule,
-    HttpClientModule
+    HttpClientModule,
+    RecaptchaModule,  //this is the recaptcha main module
+    RecaptchaFormsModule, //this is the module for form incase form validation
    ],
-  providers: [DataBaseConnectionService, LoginComponent],
+  providers: [DataBaseConnectionService, LoginComponent, CaptchaValidationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

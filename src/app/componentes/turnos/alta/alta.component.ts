@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { HomeComponent } from './../../home/home.component';
+import { DataBaseConnectionService } from './../../../services/database-connection.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { LoginComponent } from '../../login/login.component';
 
 @Component({
   selector: 'app-alta',
@@ -7,24 +10,64 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AltaComponent implements OnInit {
 
-  constructor() { }
+  @Input() cliente;
+  @Output() turnoGuardadoOutput = new EventEmitter();
+
+  constructor(public databaseConnection : DataBaseConnectionService) {
+
+   }
+
+   ngOnInit(): void {
+	console.log("ngoninit ALTA");
+	console.log("LoginComponent.finalUser", LoginComponent.finalUser);
+	//console.log(" HomeComponent.loggedUser",  HomeComponent.loggedUser);
+
+
+		this.turno.nombre = this.cliente.nombre;
+		this.turno.documento = this.cliente.documento;
+	
+	/*else if(HomeComponent.loggedUser[0] != null && HomeComponent.loggedUser[0].nombre) {
+		this.turno.nombre = HomeComponent.loggedUser[0].nombre;
+		this.turno.documento = HomeComponent.loggedUser[0].documento;
+	}*/
+
+	console.log(this.turno.nombre);
+
+
+     
+  }
+
+
 
   turno = {
-    "cliente" : "",
+    "nombre" : "",
     "id" : "" ,
     "documento" : "",
     "especialista" : "",
     "descripcion" : "",
-    "fecha" : ""
+    "fecha" : "",
+    "estado" : "",
+    "cliente" : {}
   };
 
-  especialistas = [];
+  especialistas = ["Medicina General", "Odontologia", "Oftalmologia",];
 
-  ngOnInit(): void {
-  }
+  guardandoTurno = false;
+  turnoGuardado = false;
 
-  crear(){
-    
+
+  async crear(){
+	var x;
+  this.guardandoTurno = true;
+  this.turno.estado = 'Pendiente';
+  this.turno.cliente = this.cliente;
+	await this.databaseConnection.saveEntity(DataBaseConnectionService.turno, this.turno, x).then(i => {console.log(i)});
+	this.guardandoTurno = false;
+  this.turnoGuardado = true;
+
+  this.turnoGuardadoOutput.emit();
+
+	console.log("id", x);
   }
 
 }

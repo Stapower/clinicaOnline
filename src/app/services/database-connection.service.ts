@@ -35,9 +35,12 @@ export class DataBaseConnectionService {
 	static peliculas = "/peliculas";
 	static actores = "/actores";
 	static users = "/users";
+	
+	static turno = "/turno";
 
 	static actoresYPeliculas = "/actoresYPeliculas";
 	static url = "https://restcountries.eu/rest/v2/region/americas";
+
 	static paises = new Array();
 	static loggedUser = new Paciente();
 
@@ -111,6 +114,92 @@ export class DataBaseConnectionService {
 		*/
 	}
 
+	bringEntityWithFilterDocument(path, returnObject, filterDocument){
+		console.log("bringEntityWithFilter");
+
+		var imageRef = this.afs.collection<any>(path);
+
+		imageRef.snapshotChanges().forEach(snapshot => {
+			console.log("before snapshto foreach");
+			returnObject.length = 0;
+			var postData = snapshot.forEach(doc => {
+				console.log("inside snapshto foreach");
+
+				var postData = doc.payload.doc.data();
+				console.log(doc.payload.doc.id, " => ", postData);
+				postData.id = doc.payload.doc.id;
+
+				if(postData.documento == filterDocument && !this.isDatefifteenDaysInFuture(postData.fecha))
+					returnObject.push(postData);
+			})
+			console.log("after snapshto foreach");
+
+			console.log(returnObject);
+			return returnObject;
+		});
+	}
+
+	isDatefifteenDaysInFuture(date1){
+		let dateString = date1 + 'T00:00:00';
+		let newDate = new Date(dateString);
+		newDate.getTime();
+
+		var nowDate = new Date();
+		nowDate.getTime();
+
+		if(nowDate.getTime() > newDate.getTime()){
+			return false;
+		}
+		if(nowDate.getTime() == newDate.getTime()){
+			return false;
+		}
+		if(nowDate.getTime() > newDate.getTime()){
+			var diffTime = nowDate.getTime() - newDate.getTime();
+			var day_as_milliseconds = 86400000;
+			
+			var diff_in_days = diffTime / day_as_milliseconds;
+
+			if(diff_in_days > 15){
+				return true;
+			}
+			else{
+				return false;
+			}
+			
+		}
+
+	}
+
+	bringEntityWithAssignment(path, returnObject, filterDocument){
+		console.log("bringEntityWithFilter");
+
+		var imageRef = this.afs.collection<any>(path);
+
+		imageRef.snapshotChanges().forEach(snapshot => {
+			console.log("before snapshto foreach");
+			returnObject.length = 0;
+			var postData = snapshot.forEach(doc => {
+				console.log("inside snapshto foreach");
+
+				var postData = doc.payload.doc.data();
+				console.log(doc.payload.doc.id, " => ", postData);
+				postData.id = doc.payload.doc.id;
+
+				console.log("postData.asignado.documento", postData.asignado != null ? postData.asignado.documento : postData.asignado);
+				
+				if(postData.asignado != null && postData.asignado.documento === filterDocument && !this.isDatefifteenDaysInFuture(postData.fecha)){
+					console.log("Asignado Found");
+					
+					returnObject.push(postData);
+				}
+			})
+			console.log("after snapshto foreach");
+
+			console.log("Filtered List", returnObject);
+			return returnObject;
+		});
+	}
+
 
 	async deleteEntity(path, id) {
 		console.log("bringEntity");
@@ -137,17 +226,22 @@ export class DataBaseConnectionService {
 
 
 	async saveEntity(path, newObject, returnId) {
-		this.afs.collection(path).add(newObject).then(
+		await this.afs.collection(path).add(newObject).then(
 			(res) => {
 				console.log("saveEntity", res);
-				if (returnId != null)
-					returnId.peliculaId = res.id;
+				returnId = res.id;
 			}
 		);
 	}
+
+	async saveExistingEntity(path, newObject, id) {
+		console.log("saveExistingEntity");
+		var imageRef = await this.afs.collection(path).ref;
+		await imageRef.doc("/" + id).set(newObject).then(succ => { console.log("update completed"); });
+	}
 	//{"peliculaId" : this.pelicula.id}
-	async bringUserByEmail(path, email, finaluser) {
-		console.log("bringEntityByContainsIdddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+	async bringUserByEmail(path, email, finaluser, finalUserStatic) {
+		console.log("bringEntity with email", email);
 		/*var imageRef2 = this.afs.collection<any>(path).get(keyValueJson).forEach(record => {
 			console.log("record", record);
 
@@ -157,20 +251,36 @@ export class DataBaseConnectionService {
 							})
 			});*/
 
-		var imageRef = this.afs.collection<any>(path);
+		var imageRef = await this.afs.collection<any>(path);
 
-		imageRef.snapshotChanges().forEach(snapshot => {
+		await imageRef.snapshotChanges().forEach(snapshot => {
 			var array = new Array();
-			console.log("before snapshto foreach");
-
+			console.log("before snapshot foreach");
+			
 			var postData = snapshot.forEach(doc => {
 				var postData = doc.payload.doc.data();
-				console.log("postData", postData);
+				postData.id = doc.payload.doc.id;
+				//console.log("postData", postData);
 				
 				if (postData.email == email) {
 					finaluser.length = 0;
 					finaluser.push(postData);
+
+					finalUserStatic.length = 0;
+					finalUserStatic.push(postData);
+
+					/*sessionStorage.setItem('cliente', postData.nombre);
+					sessionStorage.setItem('documento', postData.documento);
+					sessionStorage.setItem('foto', postData.foto);
+					sessionStorage.setItem('rol', postData.rol);
+					sessionStorage.setItem('especialidad', postData.especialidad);
+					sessionStorage.setItem('horarioDesde', postData.horarioDesde);
+					sessionStorage.setItem('horarioHasta', postData.horarioHasta);*/
 				}
+				console.log("postData", postData);
+				console.log("finalUser", finaluser);
+
+
 			})
 			
 			console.log("after snapshto foreach");
@@ -179,7 +289,7 @@ export class DataBaseConnectionService {
 			//returnObject = array;
 			console.log(finaluser);
 			return finaluser;
-		});
+		}).catch(err => {console.log("ERROR", err);});
 
 		/*imageRef.snapshotChanges().forEach(snapshot => {
 			var array = new Array();
@@ -205,7 +315,7 @@ export class DataBaseConnectionService {
 		try{
 			console.log(user.email, user.password);
 			const res = await this.afAuth.signInWithEmailAndPassword(user.email, user.password);
-			await this.finduser(user.email, finalUser);
+			//await this.finduser(user.email, finalUser);
 		}
 		catch(err){
 			console.dir(err);
@@ -222,8 +332,8 @@ export class DataBaseConnectionService {
 		}
 	}
 
-	async finduser(email, finaluser){
-		await this.bringUserByEmail(DataBaseConnectionService.users, email, finaluser).then(i => console.log("iiiiiiiiiiii2", i));
+	async finduser(email, finaluser, finalUserStatic){
+		await this.bringUserByEmail(DataBaseConnectionService.users, email, finaluser, finalUserStatic);
 		//localStorage.setItem('cliente',  user2);
 	
 

@@ -1,0 +1,73 @@
+<div class="card mb-4 shadow-sm">
+	<div class="card-header">
+		<h4 class="my-0 font-weight-normal">Modificar Usuario</h4>
+		<form class="form-style-7">
+			<ul>
+
+				<li>
+					<label for="name"> Apellido </label>
+					<input type="text" name="apellido"  [(ngModel)]="usuario.apellido">
+					<span>Apellido</span>
+				</li>
+
+				<li>
+					<label for="name"> Nombre </label>
+					<input type="text" name="nombre"  [(ngModel)]="usuario.nombre">
+					<span>Nombre</span>
+				</li>
+
+
+				<li>
+					<label for="name">Documento</label>
+					<input type="text" name="documento" [(ngModel)]="usuario.documento" readonly>
+					<span>Documento</span>
+				</li>
+
+				<li *ngIf="usuario.rol == 'doctor'">
+					<label for="tipo">Especialidad</label>
+					<select id="cars" name="Especialidad" [(ngModel)]="usuario.especialista">
+						<option value="{{p}}" *ngFor="let p of especialistas">{{p}}</option>
+					</select>
+				</li>
+
+				<li>
+					<label for="url">email</label>
+					<textarea name="url" maxlength="280"  [(ngModel)]="usuario.email" readonly> </textarea>
+					<span>email</span>
+				</li>
+
+				<div id="weekdaysSelectedValues" [hidden]="usuario.rol === 'doctor'">
+					<ul class="weekdays-list">
+						<li data-day="0" id="weekday-Dom" class="weekdays-day " (click)="select($event)">Dom</li>
+						<li data-day="1" id="weekday-Lun" class="weekdays-day " (click)="select($event)">Lun</li>
+						<li data-day="2" id="weekday-Mar" class="weekdays-day " (click)="select($event)">Mar</li>
+						<li data-day="3" id="weekday-Mie" class="weekdays-day " (click)="select($event)">Mie</li>
+						<li data-day="4" id="weekday-Jue" class="weekdays-day " (click)="select($event)">Jue</li>
+						<li data-day="5" id="weekday-Vie" class="weekdays-day " (click)="select($event)">Vie</li>
+						<li data-day="6" id="weekday-Sab" class="weekdays-day " (click)="select($event)">Sab</li>
+					</ul>
+				</div>
+
+				<li *ngIf="usuario.rol == 'doctor'">
+					<label for="tipo">Horario de trabajo</label>
+
+					<select id="cars" name="horarioDesde" [(ngModel)]="usuario.horarioDesde">
+						<option value="{{p}}" *ngFor="let p of horarios">{{p}}</option>
+					</select>
+					<br> 
+					<select id="cars" name="horarioHasta" [(ngModel)]="usuario.horarioHasta">
+						<option value="{{p}}" *ngFor="let p of horarios">{{p}}</option>
+					</select>
+				</li>
+
+				<!--span>No hay presupuesto para spinner, primero dar de alta la pelicula y despues seleccionar el turno (darle unos segundos por las llamadas a BD)</!--span-->
+				<li>
+					<button type="button" class="btn btn-lg btn-block btn-primary" (click)="guardar()">Gurdar</button>
+				</li>
+			</ul>
+		</form>
+	</div>
+
+	<div> 
+		
+	</div>

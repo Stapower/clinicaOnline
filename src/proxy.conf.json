@@ -1,0 +1,15 @@
+{
+    "/v3/*": {
+        "target": "https://api.sendgrid.com/",
+		"secure": false,
+		"changeOrigin": true,
+        "logLevel": "debug"
+	},
+	"/recaptcha/*": {
+        "target": "https://www.google.com/",
+		"secure": false,
+		"changeOrigin": true,
+        "logLevel": "debug"
+	}
+	
+}

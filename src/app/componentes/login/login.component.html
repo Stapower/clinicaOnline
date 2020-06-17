@@ -77,6 +77,7 @@
       </form>
     </div>
   </body-->
+  <script src="https://www.google.com/recaptcha/api.js?render=6LcaBKYZAAAAADVMh2H0co3Qlf2-s216cLUpKAtW"></script>
 
 <form class="login-form">
 	<p class="login-text">
@@ -93,9 +94,29 @@
 
   <input type="button" value="Cliente 1" class="login-submit" (click)="setLoginValues('cliente1@utn.com', '123456')">
   <input type="button" value="Cliente 2" class="login-submit" (click)="setLoginValues('cliente2@utn.com', '123456')">
+
   <input type="button" value="Medico 1" class="login-submit" (click)="setLoginValues('medico1@utn.com', '123456')">
+  <input type="button" value="Medico 2" class="login-submit" (click)="setLoginValues('medico2@utn.com', '123456')">
+  
+  <input type="button" value="Cliente con email verdadero" class="login-submit" (click)="setLoginValues('tomynfs2@gmail.com', '123456')">
+
+  <re-captcha class="captcha" (resolved)="resolved($event, '6LcaBKYZAAAAADVMh2H0co3Qlf2-s216cLUpKAtW')" 
+  siteKey="6LeGBaYZAAAAAK9XwPKvS2_7WF8FszDD23A9RVpT">  
+  </re-captcha>
 
 </form>
+
+
+
+<!--TESTING CAPTCHA FOR LOCALHOST-->
+
+<!--re-captcha (resolved)="resolved($event, '6LcaBKYZAAAAADVMh2H0co3Qlf2-s216cLUpKAtW')" 
+siteKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI">  
+</!--re-captcha>
+
+
+<!--re-captcha (resolved)="resolved($event, '')"> </!--re-captcha-->
+
 
 <div class="underlay-photo"></div>
 <div class="underlay-black"></div>
