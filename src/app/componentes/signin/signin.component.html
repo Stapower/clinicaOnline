@@ -77,7 +77,7 @@
       </form>
     </div>
   </body-->
-  <script src="https://www.google.com/recaptcha/api.js?render=6LcaBKYZAAAAADVMh2H0co3Qlf2-s216cLUpKAtW"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LcaBKYZAAAAADVMh2H0co3Qlf2-s216cLUpKAtW"></script>
 
 <form class="login-form">
 	<p class="login-text">
@@ -85,29 +85,26 @@
 			<i class="fa fa-circle fa-stack-2x"></i>
 			<i class="fa fa-lock fa-stack-1x"></i>
 		</span>
+		
 	</p>
-	<input type="email" class="login-username" autofocus="true" required="true" placeholder="Email" [(ngModel)]="user.email" name="usuario"
-	/>
-	<input type="password" class="login-password" required="true" placeholder="Password" [(ngModel)]="user.password" name="clave" />
-  <input type="submit" name="Login" value="Login" (click)="Entrar()" class="login-submit" />
-  <!--input type="number" [(ngModel)]="user.email"-->
-  <input type="button" value="Crear Usuario" class="login-submit" (click)="crear()">
 
-  <br>
-  <input type="button" value="Administrador" class="login-submit" (click)="setLoginValues('tomy_nfs2@hotmail.com', '123456')">
+	<input type="email" class="login-username" autofocus="true" required="true" placeholder="Email"
+		[(ngModel)]="user.email" name="usuario" />
 
+	<input type="password" class="login-password" required="true" placeholder="Password" [(ngModel)]="user.password"
+		name="clave" />
 
-  <input type="button" value="Cliente 1" class="login-submit" (click)="setLoginValues('asd5@utn.com', '123456')">
-  <input type="button" value="Cliente 2" class="login-submit" (click)="setLoginValues('asd6@utn.com', '123456')">
+	<input type="password" class="login-password" required="true" placeholder="Password" [(ngModel)]="user.password2"
+	name="clave" />
 
-  <input type="button" value="Medico 1" class="login-submit" (click)="setLoginValues('medico1@utn.com', '123456')">
-  <input type="button" value="Medico 2" class="login-submit" (click)="setLoginValues('medico2@utn.com', '123456')">
-  
-  <input type="button" value="Cliente con email verdadero" class="login-submit" (click)="setLoginValues('tomynfs2@gmail.com', '123456')">
+	<input type="submit" name="Login" value="Sign In" (click)="signIn()" class="login-submit" />
 
-  <re-captcha class="captcha" (resolved)="resolved($event, '6LcaBKYZAAAAADVMh2H0co3Qlf2-s216cLUpKAtW')" 
-  siteKey="6LeGBaYZAAAAAK9XwPKvS2_7WF8FszDD23A9RVpT">  
-  </re-captcha>
+	<app-upload-image (imageUrl)="saveUrl($event)"></app-upload-image>
+	<app-upload-image (imageUrl)="saveUrl($event)"></app-upload-image>
+
+	<re-captcha class="captcha" (resolved)="resolved($event, '6LcaBKYZAAAAADVMh2H0co3Qlf2-s216cLUpKAtW')"
+		siteKey="6LeGBaYZAAAAAK9XwPKvS2_7WF8FszDD23A9RVpT">
+	</re-captcha>
 
 </form>
 

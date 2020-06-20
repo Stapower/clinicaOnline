@@ -2,13 +2,13 @@ body{
     font-family: cursive;
 }
 
-*{
+/**{
 	-webkit-transition-property: all;
 	-webkit-transition-duration: .2s;
   -moz-transition-timing-function: cubic-bezier(100,50,21,6);
 	-moz-transition-property: all;
   -moz-transition-timing-function: cubic-bezier(100,50,21,6);
-}
+}*/
 
 /*.slidein {
   transition: 1s;
@@ -195,6 +195,28 @@ body {
   font-size: 17px;
   border: none;
   cursor: pointer;
+}
+
+[class*=underlay] {
+  left: 0;
+  min-height: 100%;
+  min-width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+.underlay-photo {
+  animation: hue-rotate 6s infinite;
+  background: url('https://firebasestorage.googleapis.com/v0/b/tpclinicaonline.appspot.com/o/pictures%2Fcirugia.jpg?alt=media&token=775008e1-cdb3-4424-9cef-14e276e530fe');
+  background-size: cover;
+  
+  z-index: -1;
+}
+/*-webkit-filter: grayscale(30%);*/
+
+.underlay-black {
+  background: rgba(0,0,0,0.7);
+  z-index: -1;
 }
 
 .topnav .login-container button:hover {

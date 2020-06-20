@@ -49,14 +49,14 @@
 
 		<div class="topnav">
 
-			<a class="btn" id="home" href="Home">Home</a>
-
-			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol != 'doctor'" class="btn" (click)="referTo('alta')">Alta Turno</a>
+			<a class="btn" id="home" (click)="referTo('')">Home</a>
+			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'paciente'" class="btn" (click)="referTo('alta')">Alta Turno</a>
 			
-			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'doctor'" class="btn" (click)="referTo('listaTurnos')">Lista Turnos</a>
+			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'" class="btn" (click)="referTo('listaTurnos')">Lista Turnos</a>
 
-			<a class="btn" (click)="referTo('misTurnos')">Mis Turnos</a>
+			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol != 'admin' && (loggedUser[0].medico == 'Si' && loggedUser[0].isActivated == 'true')"class="btn" (click)="referTo('misTurnos')">Mis Turnos</a>
 
+			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'"class="btn" (click)="referTo('listaUsuarios')">Lista Usuarios</a>
 
 			<div class="login-container">
 				<div *ngIf="!loggedUser[0] && false">
@@ -70,7 +70,7 @@
 						src ="{{loggedUser[0].foto}}"
 						srcset="{{loggedUser[0].foto}} 1x, {{loggedUser[0].foto}} 2x "
 						alt="" aria-hidden="true"
-						(click)="referTo('perfil')">
+						(click)="referToWithUser('perfil', loggedUser[0])">
 				</div>
 
 				<!--a class="btn" href="login">LogOut</~a-->
@@ -84,30 +84,36 @@
 
 	</body>
 
+	<div *ngIf="loggedUser[0]">
+		<div id="alta" [hidden]="showMe != 'alta'">
+			<app-alta [cliente]=loggedUser[0] (turnoGuardadoOutput)="referTo('misTurnos')"></app-alta>
+		</div>
+
+		<div id="listaTurnos" [hidden]="showMe != 'listaTurnos'">
+			<app-listado [rol]=loggedUser[0].rol (turnoSeleccionado)="seleccionDeTurno($event)"></app-listado>
+		</div>
+		
+		<div  id="turno" [hidden]="showMe != 'turno'">
+			<app-turno [usuario]=loggedUser[0] (turnoGurdado)=turnoGuardado()  [turno]=turno></app-turno>
+		</div>
+
+		<div id="misTurnos" [hidden]="showMe != 'misTurnos'">
+			<app-mis-turnos [usuario]=loggedUser[0] (turnoSeleccionado)="seleccionDeTurno($event)"></app-mis-turnos>
+		</div>
+
+		<div id="perfil" *ngIf="showMe == 'perfil'">
+			<app-usuario [usuario]=usuario [usuarioLoggeado]=loggedUser[0]></app-usuario>
+		</div>
+
+		<div id="listaUsuarios" [hidden]="showMe != 'listaUsuarios'">
+			<app-lista-usuario [usuario]=loggedUser[0] (usuarioSeleccionado)="seleccionDeUsuario($event)"></app-lista-usuario>
+		</div>
+	</div>
+
 	<div id="snackbar">{{Mensajes}}</div>
 
-
-	<div id="alta" [hidden]="showMe != 'alta'">
-		<app-alta [cliente]=loggedUser[0] (turnoGuardadoOutput)="referTo('misTurnos')"></app-alta>
-	</div>
-
-	<div id="listaTurnos" [hidden]="showMe != 'listaTurnos'">
-		<app-listado [rol]=loggedUser[0].rol (turnoSeleccionado)="seleccionDeTurno($event)"></app-listado>
-	</div>
-	
-	<div  id="turno" [hidden]="showMe != 'turno'">
-		<app-turno [usuario]=loggedUser[0] (turnoGurdado)=turnoGuardado()  [turno]=turno></app-turno>
-	</div>
-
-	<div id="misTurnos" [hidden]="showMe != 'misTurnos'">
-		<app-mis-turnos [usuario]=loggedUser[0] (turnoSeleccionado)="seleccionDeTurno($event)"></app-mis-turnos>
-	</div>
-
-	<div id="perfil" [hidden]="showMe != 'perfil'">
-		<app-usuario [usuario]=loggedUser[0]></app-usuario>
-	</div>
-
+	<div class="underlay-photo"></div>
+	<div class="underlay-black"></div>
 
 	<router-outlet></router-outlet>
-
 </html>

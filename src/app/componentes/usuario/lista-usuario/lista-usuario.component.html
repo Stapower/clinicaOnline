@@ -1,0 +1,51 @@
+<!--script>
+	function print(){
+	html2canvas(document.getElementById('exportthis'), {
+		onrendered: function (canvas) {
+			var data = canvas.toDataURL();
+			var docDefinition = {
+				content: [{
+					image: data,
+					width: 500,
+				}]
+			};
+			pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
+		}
+	});
+}
+</script-->
+
+<!-- Add icon library -->
+<!-- Auto width -->
+
+<table class="table table-hover table-dark" id="exportthis">
+	<thead>
+	  <tr>
+		<th scope="col">#</th>
+		<th scope="col">Nombre</th>
+		<th scope="col">Apellido</th>
+		<th scope="col">Documento</th>
+		<th scope="col">Email</th>
+		<th scope="col">Foto</th>
+		<th scope="col">Rol</th>
+		<th scope="col">Ir a detalles</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr *ngFor="let user of usuarios; let index=index; let odd=odd; let even=even;">
+		<th scope="row">{{index+1}}</th>
+		
+		<td>{{user.nombre}}</td>
+		<td>{{user.apellido}}</td>
+		<td>{{user.documento}}</td>
+		<td>{{user.email}}</td>
+		<td *ngIf="user.foto"><img src="{{user.foto}}" width="250px" height="150px"></td>
+		<td style="color:aquamarine">{{user.rol}}</td>
+		
+		<td>
+			<button type="button" class="btn btn-lg btn-block btn-primary" (click)="seleccionar(user)">Seleccionar</button>
+		</td>
+
+	  </tr>
+	</tbody>
+  </table>

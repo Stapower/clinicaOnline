@@ -5,8 +5,28 @@
 			<ul>
 
 				<li>
+					<label for="name"> Es medico? </label>
+					<input type="radio" id="pregunta1" name="pregunta1" value="Si" [(ngModel)]="usuario.medico">
+					Soy medico
+					<input type="radio" id="pregunta2" name="pregunta2" value="false" [(ngModel)]="usuario.medico">
+					Soy paciente
+				</li>
+
+				<li *ngIf="usuarioLoggeado.rol == 'admin' && usuario.medico">
+					<label for="name"> Confirmacion </label>
+
+					<input type="radio" id="pregunta3" name="pregunta3" value="true" [(ngModel)]="usuario.isActivated">
+					Es medico.
+					<input type="radio" id="pregunta4" name="pregunta4" value="false" [(ngModel)]="usuario.isActivated">
+					No es medico.
+
+					<span style="color:red"> Confirmacion </span>
+
+				</li>
+
+				<li>
 					<label for="name"> Apellido </label>
-					<input type="text" name="apellido"  [(ngModel)]="usuario.apellido">
+					<input type="text" name="apellido" [(ngModel)]="usuario.apellido">
 					<span>Apellido</span>
 				</li>
 
@@ -16,14 +36,19 @@
 					<span>Nombre</span>
 				</li>
 
-
-				<li>
-					<label for="name">Documento</label>
+				<li *ngIf="whenScreenLoadsDocumento != null">
+					<label for="Documento">Documento</label>
 					<input type="text" name="documento" [(ngModel)]="usuario.documento" readonly>
 					<span>Documento</span>
 				</li>
 
-				<li *ngIf="usuario.rol == 'doctor'">
+				<li *ngIf="whenScreenLoadsDocumento == null">
+					<label for="Documento2">Documento</label>
+					<input type="text" name="Documento2" [(ngModel)]="usuario.documento">
+					<span>Documento</span>
+				</li>
+
+				<li *ngIf="usuario.rol == 'Profesional'">
 					<label for="tipo">Especialidad</label>
 					<select id="cars" name="Especialidad" [(ngModel)]="usuario.especialista">
 						<option value="{{p}}" *ngFor="let p of especialistas">{{p}}</option>
@@ -36,7 +61,14 @@
 					<span>email</span>
 				</li>
 
-				<div id="weekdaysSelectedValues" [hidden]="usuario.rol === 'doctor'">
+				<li *ngIf="usuarioLoggeado.rol == 'admin'">
+					<label for="rol">Rol</label>
+					<select id="rol" name="rol" [(ngModel)]="usuario.rol">
+						<option value="{{rol}}" *ngFor="let rol of roles">{{rol}}</option>
+					</select>
+				</li>
+
+				<div id="weekdaysSelectedValues" [hidden]="usuario.rol !== 'Profesional'">
 					<ul class="weekdays-list">
 						<li data-day="0" id="weekday-Dom" class="weekdays-day " (click)="select($event)">Dom</li>
 						<li data-day="1" id="weekday-Lun" class="weekdays-day " (click)="select($event)">Lun</li>
@@ -48,7 +80,7 @@
 					</ul>
 				</div>
 
-				<li *ngIf="usuario.rol == 'doctor'">
+				<li *ngIf="usuario.rol == 'Profesional'">
 					<label for="tipo">Horario de trabajo</label>
 
 					<select id="cars" name="horarioDesde" [(ngModel)]="usuario.horarioDesde">

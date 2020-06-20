@@ -68,7 +68,7 @@ html {
 	text-align: center;
 	padding: 0;
 	margin: 0px 0px 20px 0px;
-	color: #5C5C5C;
+	/*color: #5C5C5C;*/
 	font-size:x-large;
 }
 .form-style-7 ul{
@@ -95,7 +95,7 @@ html {
 	background: #FFFFFF;
 	height: 14px;
 	padding: 2px 5px 2px 5px;
-	color: #B9B9B9;
+	/*color: #B9B9B9;*/
 	font-size: 14px;
 	overflow: hidden;
 	font-family: Arial, Helvetica, sans-serif;
@@ -125,7 +125,7 @@ html {
 	padding: 0;
 	font-family: Georgia, "Times New Roman", Times, serif;
 }
-.form-style-7 input[type="text"]:focus,
+/*.form-style-7 input[type="text"]:focus,
 .form-style-7 input[type="date"]:focus,
 .form-style-7 input[type="datetime"]:focus,
 .form-style-7 input[type="email"]:focus,
@@ -137,7 +137,7 @@ html {
 .form-style-7 textarea:focus,
 .form-style-7 select:focus 
 {
-}
+}*/
 .form-style-7 li > span{
 	background: #F3F3F3;
 	display: block;
@@ -270,6 +270,14 @@ html {
   z-index: 1;
 }
 
+div{
+  color: black;
+}
+
+textarea{
+  color: black;
+}
+
 .emoji-wrapper:before {
   top: 0;
   background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 35%,rgba(255,255,255,0) 100%);
@@ -312,3 +320,54 @@ html {
   align-items: center;
   box-shadow: 0 4px 30px rgba(0,0,0,.05);
 }
+
+
+/* use display:inline-flex to prevent whitespace issues. alternatively, you can put all the children of .rating-group on a single line */
+.rating-group {
+  display: inline-flex;
+}
+
+/* make hover effect work properly in IE */
+.rating__icon {
+  pointer-events: none;
+}
+
+/* hide radio inputs */
+.rating__input {
+ position: absolute !important;
+ left: -9999px !important;
+}
+
+/* hide 'none' input from screenreaders */
+.rating__input--none {
+  display: none
+}
+
+/* set icon padding and size */
+.rating__label {
+  cursor: pointer;
+  padding: 0 0.1em;
+  font-size: 2rem;
+}
+
+/* set default star color */
+.rating__icon--star {
+  color: orange;
+}
+
+/* if any input is checked, make its following siblings grey */
+.rating__input:checked ~ .rating__label .rating__icon--star {
+  color: #ddd;
+}
+
+/* make all stars orange on rating group hover */
+.rating-group:hover .rating__label .rating__icon--star {
+  color: orange;
+}
+
+/* make hovered input's following siblings grey on hover */
+.rating__input:hover ~ .rating__label .rating__icon--star {
+  color: #ddd;
+}
+
+

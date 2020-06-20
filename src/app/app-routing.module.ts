@@ -1,9 +1,11 @@
+import { SigninComponent } from './componentes/signin/signin.component';
 import { AltaComponent } from './componentes/turnos/alta/alta.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { HomeComponent } from './componentes/home/home.component';
 import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+
 /*import { BusquedaComponent } from './componentes/busqueda/busqueda.component';
 import { AltaComponent } from './componentes/peliculas/alta/alta.component';
 import { ListadoComponent } from './componentes/actor/listado/listado.component';
@@ -47,6 +49,7 @@ const MiRuteo = [
 const MiRuteo = [
   
   {path: 'login' , component: LoginComponent},
+  {path: 'signIn' , component: SigninComponent},
   {path: '' , component: LoginComponent},
   //{path: 'Turno/Alta', component: AltaComponent},
   {path: 'Home' , component: HomeComponent,
@@ -71,7 +74,9 @@ const MiRuteo = [
 @NgModule({
   declarations: [],
   imports: [CommonModule, 
-    RouterModule.forRoot(MiRuteo)
+    RouterModule.forRoot(MiRuteo, {
+      onSameUrlNavigation: 'reload'
+    })
   ],
   exports: [RouterModule]
 })

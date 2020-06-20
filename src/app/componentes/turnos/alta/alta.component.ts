@@ -37,6 +37,30 @@ export class AltaComponent implements OnInit {
      
   }
 
+	profesionalCuestionario = [
+		{
+			"pregunta": "Recomendarias al paciente?",
+			"respuesta": ""
+		},
+		{
+			"pregunta": "Tuvo buen manejo con la app?",
+			"respuesta": ""
+		},
+  ];
+  
+  clientelCuestionario = [
+		{
+			"pregunta": "Recomendarias al doctor?",
+			"respuesta": ""
+		},
+		{
+			"pregunta": "Recomendarias la clinica?",
+			"respuesta": ""
+		},
+  ];
+
+
+  
 
 
   turno = {
@@ -47,7 +71,8 @@ export class AltaComponent implements OnInit {
     "descripcion" : "",
     "fecha" : "",
     "estado" : "",
-    "cliente" : {}
+    "cliente" : {},
+    "cuestionario" : { "cuestionarioProfesional" : this.profesionalCuestionario, "cuestionarioCliente": this.clientelCuestionario }
   };
 
   especialistas = ["Medicina General", "Odontologia", "Oftalmologia",];

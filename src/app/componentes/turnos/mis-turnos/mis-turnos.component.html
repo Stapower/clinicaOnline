@@ -1,10 +1,12 @@
+<input type="text" placeholder="Buscar..." (keyup)="enter($event)" [(ngModel)]="filterString">
+
 <table class="table table-hover table-dark">
 	<thead>
 	  <tr>
 		<th scope="col">#</th>
 		<th class="thFilter" scope="col" (click)="orderBy('Especialidad')">Especialidad</th>
 		<th class="thFilter" scope="col" (click)="orderBy('Fecha')">Fecha</th>
-		<th class="thFilter" scope="col" (click)="orderBy('Nombre')">Nombre</th>
+		<th class="thFilter" scope="col" (click)="orderBy('Nombre')">Nombre del medico</th>
 		<th scope="col">Documento</th>
 		<th scope="col">Foto</th>
 		<th scope="col">Estado</th>
@@ -21,6 +23,8 @@
 		<td *ngIf="turno.asignado == null"> Turno aun no asignado </td>
 		<td>{{turno.documento}}</td>
 		<td *ngIf="turno.cliente"><img src="{{turno.cliente.foto}}" width="250px" height="150px"></td>
+		<td *ngIf="!turno.cliente"><img src="https://firebasestorage.googleapis.com/v0/b/tpclinicaonline.appspot.com/o/40490.svg?alt=media&token=a762dbd7-69eb-45c7-9f5d-9e8ae1e6c1f4" width="250px" height="150px"></td>
+		<!-->//<-->
 		<td style="color:aquamarine">{{turno.estado}}</td>
 		<td>	<button type="button" class="btn btn-lg btn-block btn-primary" (click)="seleccionar(turno)">Seleccionar</button>
 		</td>

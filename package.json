@@ -23,6 +23,7 @@
     "firebase": "^7.14.6",
     "html2canvas": "^1.0.0-rc.5",
     "ng-recaptcha": "^5.0.0",
+    "ng2-file-upload": "^1.4.0",
     "pdfmake": "^0.1.65",
     "pdfmake-wrapper": "^2.0.0",
     "rxjs": "~6.5.4",

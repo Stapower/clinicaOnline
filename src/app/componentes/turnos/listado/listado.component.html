@@ -38,6 +38,7 @@
 		<td>{{turno.nombre}}</td>
 		<td>{{turno.documento}}</td>
 		<td *ngIf="turno.cliente"><img src="{{turno.cliente.foto}}" width="250px" height="150px"></td>
+		<td *ngIf="!turno.cliente"><img src="https://firebasestorage.googleapis.com/v0/b/tpclinicaonline.appspot.com/o/40490.svg?alt=media&token=a762dbd7-69eb-45c7-9f5d-9e8ae1e6c1f4" width="250px" height="150px"></td>
 		<td style="color:aquamarine">{{turno.estado}}</td>
 		
 		<td>	<button type="button" class="btn btn-lg btn-block btn-primary" (click)="seleccionar(turno)">Seleccionar</button>

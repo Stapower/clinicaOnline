@@ -1,7 +1,7 @@
 import { Paciente } from './../../clases/paciente';
 import { DataBaseConnectionService } from './../../services/database-connection.service';
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap, CanActivate } from '@angular/router';
 import { LoginComponent } from '../login/login.component';
 
 
@@ -11,20 +11,61 @@ import { LoginComponent } from '../login/login.component';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy, CanActivate {
 
   constructor(	private router: Router, 
 				private login : LoginComponent,
 				private databaseConnection: DataBaseConnectionService
-	) { }
+	) {
 
+		this.navigationSubscription = this.router.events.subscribe((e: any) => {
+			// If it is a NavigationEnd event re-initalise the component
+				console.log("RelaodUserrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", e);
+				if(e.url != null)
+				{
+					var email = e.url.split('=')[1];
+
+				}
+			  	this.reloadUser2(email);
+		  });
+	
+		}
+
+	canActivate() {
+		// If the user is not logged in we'll send them back to the home page
+		if (sessionStorage.getItem('email') == null) {
+			console.log('No estás logueado');
+			this.router.navigate(['/']);
+			return false;
+		}
+
+		return true;
+	}
+
+
+	navigationSubscription;
   
    loggedUser = [];
    public static loggedUser = [];
   
 
-  ngOnInit(): void {
+	reloadUser2(email){
+		console.log("ngOnInit HOME");
+		console.log("this.loggedUser", this.loggedUser[0] );
+		console.log("HomeComponent.finalUser", HomeComponent.loggedUser[0]);
 
+		//if(this.loggedUser[0] == undefined && HomeComponent.loggedUser[0] == undefined){
+			console.log("YENDO A BUSCAR EL USUARIO", email);
+			this.databaseConnection.finduser(email, this.loggedUser, HomeComponent.loggedUser);
+			HomeComponent.loggedUser = this.loggedUser;
+
+		//}
+		//else if(HomeComponent.loggedUser[0] != undefined){
+		//	this.loggedUser = HomeComponent.loggedUser;
+		//}
+	}
+
+	reloadUser(){
 		console.log("ngOnInit HOME");
 		console.log("this.loggedUser", this.loggedUser[0] );
 		console.log("HomeComponent.finalUser", HomeComponent.loggedUser[0]);
@@ -34,15 +75,34 @@ export class HomeComponent implements OnInit {
 		if(this.loggedUser[0] == undefined && HomeComponent.loggedUser[0] == undefined){
 			console.log("YENDO A BUSCAR EL USUARIO");
 			this.databaseConnection.finduser(email, this.loggedUser, HomeComponent.loggedUser);
+			HomeComponent.loggedUser = this.loggedUser;
+
 		}
 		else if(HomeComponent.loggedUser[0] != undefined){
 			this.loggedUser = HomeComponent.loggedUser;
 		}
+	}
 
+  ngOnInit(): void {
+
+		this.reloadUser();
+		
+		/*this.router.events.subscribe( i => {
+			this.reloadUser();
+		});*/
 		//if(this.loggedUser != null)
 		//	this.loggedUser = this.loggedUser;
 			
 		//this.loggedUser.push(this.returnClientFromSession());
+  }
+
+  ngOnDestroy() {
+    // avoid memory leaks here by cleaning up after ourselves. If we  
+    // don't then we will continue to run our initialiseInvites()   
+    // method on every navigationEnd event.
+    if (this.navigationSubscription) {  
+       this.navigationSubscription.unsubscribe();
+    }
   }
 
   returnClientFromSession(){
@@ -61,13 +121,16 @@ export class HomeComponent implements OnInit {
 		password: "123456"
   };
 
+  usuario;
+
   Mensajes: string;
 
-  showMe;
+  showMe = "";
   
   referTo(value){
 	var oldValue = this.showMe;
 	this.showMe = value;
+	//this.usuario = this.loggedUser;
 	//misTurnos
 	//listaTurnos
 	//turno
@@ -78,25 +141,35 @@ export class HomeComponent implements OnInit {
 	switch (value) {
 		case "misTurnos":
 			var e = document.getElementById(value);
-			console.log(e);
+			//console.log(e);
 			e.classList.add("w3-animate-top");
 		break;
 
 		case "listaTurnos":
 			var e = document.getElementById(value);
-			console.log(e);
+			//console.log(e);
 			e.classList.add("w3-animate-left");
 		break;
 
 		case "turno":
 			var e = document.getElementById(value);
-			console.log(e);
+			//console.log(e);
 			e.classList.add("w3-animate-right");
 		break;
 
 		case "perfil":
 			var e = document.getElementById(value);
-			console.log(e);
+			//console.log(e);
+			e.classList.add("w3-animate-bottom");
+		break;
+		case "alta":
+			var e = document.getElementById(value);
+			//console.log(e);
+			e.classList.add("w3-animate-bottom");
+		break;
+		case "listaUsuarios":
+			var e = document.getElementById(value);
+			//console.log(e);
 			e.classList.add("w3-animate-bottom");
 		break;
 
@@ -179,8 +252,23 @@ export class HomeComponent implements OnInit {
 		this.turno = turno;
 	}
 
+	seleccionDeUsuario(usuario){
+		this.showMe = 'perfil';
+		this.usuario = usuario;
+	}
+
 	turnoGuardado(){
 		this.turno = null;
+	}
+
+	referToWithUser(showme, object){
+		this.showMe = showme;
+		this.usuario = object;
+
+		if(showme == "perfil"){
+			var e = document.getElementById(showme);
+			e.classList.add("w3-animate-bottom");
+		}
 	}
 
 }

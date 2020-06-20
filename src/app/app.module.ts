@@ -25,6 +25,9 @@ import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import{PdfMakeWrapper} from "pdfmake-wrapper";
+import { SigninComponent } from './componentes/signin/signin.component';
+import { UploadImageComponent } from './componentes/upload-image/upload-image.component';
+import { ListaUsuarioComponent } from './componentes/usuario/lista-usuario/lista-usuario.component';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -39,7 +42,10 @@ PdfMakeWrapper.setFonts(pdfFonts);
     ListadoComponent,
     TurnoComponent,
     MisTurnosComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    SigninComponent,
+    UploadImageComponent,
+    ListaUsuarioComponent
   ],
   imports: [
     BrowserModule,

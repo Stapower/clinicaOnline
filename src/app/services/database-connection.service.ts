@@ -1,6 +1,6 @@
+import { Doctor } from './../clases/doctor';
 import { element } from 'protractor';
 import { Paciente } from './../clases/paciente';
-import { Doctor } from './../clases/doctor';
 import { Injectable, EventEmitter } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -12,7 +12,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import * as firebase from 'firebase/app';
+import 'firebase/storage';
 
 @Injectable({
 	providedIn: 'root'
@@ -37,6 +38,7 @@ export class DataBaseConnectionService {
 	static users = "/users";
 	
 	static turno = "/turno";
+	basePicturesPath = "pictures/";
 
 	static actoresYPeliculas = "/actoresYPeliculas";
 	static url = "https://restcountries.eu/rest/v2/region/americas";
@@ -329,14 +331,81 @@ export class DataBaseConnectionService {
 		}
 		catch(err){
 			console.dir(err);
+			throw err;
 		}
 	}
 
 	async finduser(email, finaluser, finalUserStatic){
 		await this.bringUserByEmail(DataBaseConnectionService.users, email, finaluser, finalUserStatic);
 		//localStorage.setItem('cliente',  user2);
-	
-
 		console.log(finaluser);
 	}
+
+	async addImage(value, relativePath) {
+		console.log("value", value);
+		const selfieRef = firebase.storage().ref(this.basePicturesPath + relativePath);
+		await selfieRef.put(value);
+			//, 'base64', { contentType: 'image/png' });
+
+		var download = "";
+
+		await selfieRef.getDownloadURL().then(succ => {
+			download = succ;
+		});
+
+		return download;
+	}
+
+	/*
+		const selfieRef = firebase.storage().ref(this.basePicturesPath + relativePath);
+		await selfieRef.putString(value, 'base64', { contentType: 'image/png' });
+
+		var download = "";
+
+		await selfieRef.getDownloadURL().then(succ => {
+			download = succ;
+		});
+	*/
+
+	bringEntityWithFilterString(path, turnos, filterWord, isProfesional, filterDocument){
+		console.log("bringEntityWithFilterString");
+
+		var imageRef = this.afs.collection<any>(path);
+
+		imageRef.get().forEach((snapshot => {
+		//imageRef.snapshotChanges().forEach(snapshot => {
+			console.log("before snapshto foreach");
+			turnos.length = 0;
+			var postData = snapshot.forEach(doc => {
+				console.log("inside snapshto foreach");
+
+				var postData = doc.data();
+				console.log(doc.id, " => ", postData);
+				postData.id = doc.id;
+				
+				var jsonString = JSON.stringify(postData);
+				
+				if(isProfesional && 
+					(postData.asignado != null 
+						&& postData.asignado.documento === filterDocument)){
+
+						if(jsonString.includes(filterWord))
+							turnos.push(postData);
+						else if(filterWord == null || filterWord == undefined)
+							turnos.push(postData);
+				}
+				else if(postData.documento == filterDocument){
+					if(jsonString.includes(filterWord))
+						turnos.push(postData);
+					else if(filterWord == null || filterWord == undefined)
+						turnos.push(postData);
+				}
+			})
+			console.log("after snapshto foreach");
+			console.log(turnos);
+			return turnos;
+		}));
+	}
+
+
 }

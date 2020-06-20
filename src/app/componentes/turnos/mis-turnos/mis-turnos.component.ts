@@ -16,12 +16,13 @@ export class MisTurnosComponent implements OnInit {
 
 
 	turnos = [];
+	filterString;
 
 	ngOnInit(): void {
 		var filter = this.usuario.documento;
 		console.log("documento: ", filter);
 
-		if (this.usuario.rol != null && this.usuario.rol == 'doctor'){
+		if (this.usuario.rol != null && this.usuario.rol == 'Profesional'){
 			this.databaseConnection.bringEntityWithAssignment(DataBaseConnectionService.turno, this.turnos, filter);
 		}
 		else{
@@ -74,6 +75,20 @@ export class MisTurnosComponent implements OnInit {
 
 		if(b.apellido == null )
 			return -1;	
+			
 		return a.apellido.localeCompare(b.apellido);
+	}
+
+	enter(event){
+		var filterDocument = this.usuario.documento;
+
+		if(event.key == "Enter"){
+			if (this.usuario.rol != null && this.usuario.rol == 'Profesional'){
+				this.databaseConnection.bringEntityWithFilterString(DataBaseConnectionService.turno, this.turnos, this.filterString, true, filterDocument);
+			}
+			else{
+				this.databaseConnection.bringEntityWithFilterString(DataBaseConnectionService.turno, this.turnos, this.filterString, false, filterDocument);
+			}
+		}
 	}
 }
