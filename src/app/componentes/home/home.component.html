@@ -110,7 +110,7 @@
 		</div>
 	</div>
 
-	<app-grafico></app-grafico>
+	<app-grafico *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'"></app-grafico>
 
 	<div id="snackbar">{{Mensajes}}</div>
 
