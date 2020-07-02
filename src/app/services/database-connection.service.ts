@@ -38,6 +38,8 @@ export class DataBaseConnectionService {
 	static users = "/users";
 	
 	static turno = "/turno";
+	static especialidades = "/especialidades";
+
 	basePicturesPath = "pictures/";
 
 	static actoresYPeliculas = "/actoresYPeliculas";

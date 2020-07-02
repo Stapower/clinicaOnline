@@ -2,7 +2,6 @@ import { Paciente } from './../../clases/paciente';
 import { DataBaseConnectionService } from './../../services/database-connection.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap, CanActivate } from '@angular/router';
-import { LoginComponent } from '../login/login.component';
 
 
 
@@ -14,7 +13,6 @@ import { LoginComponent } from '../login/login.component';
 export class HomeComponent implements OnInit, OnDestroy, CanActivate {
 
   constructor(	private router: Router, 
-				private login : LoginComponent,
 				private databaseConnection: DataBaseConnectionService
 	) {
 

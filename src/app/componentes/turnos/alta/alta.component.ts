@@ -18,10 +18,10 @@ export class AltaComponent implements OnInit {
    }
 
    ngOnInit(): void {
-	console.log("ngoninit ALTA");
-	console.log("LoginComponent.finalUser", LoginComponent.finalUser);
-	//console.log(" HomeComponent.loggedUser",  HomeComponent.loggedUser);
 
+    console.log("ngoninit ALTA");
+    console.log("LoginComponent.finalUser", LoginComponent.finalUser);
+    //console.log(" HomeComponent.loggedUser",  HomeComponent.loggedUser);
 
 		this.turno.nombre = this.cliente.nombre;
 		this.turno.documento = this.cliente.documento;
@@ -34,8 +34,11 @@ export class AltaComponent implements OnInit {
 	console.log(this.turno.nombre);
 
 
-     
+    this.getEspecialidades();
+
   }
+
+	especialistas = [];
 
 	profesionalCuestionario = [
 		{
@@ -75,11 +78,14 @@ export class AltaComponent implements OnInit {
     "cuestionario" : { "cuestionarioProfesional" : this.profesionalCuestionario, "cuestionarioCliente": this.clientelCuestionario }
   };
 
-  especialistas = ["Medicina General", "Odontologia", "Oftalmologia",];
+  //especialistas = ["Medicina General", "Odontologia", "Oftalmologia",];
 
   guardandoTurno = false;
   turnoGuardado = false;
 
+	getEspecialidades(){
+		this.databaseConnection.bringEntity(DataBaseConnectionService.especialidades, this.especialistas);
+	}
 
   async crear(){
 	var x;

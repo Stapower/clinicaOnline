@@ -1,6 +1,6 @@
+import { DataBaseConnectionService } from './../../services/database-connection.service';
 import { element } from 'protractor';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { DataBaseConnectionService } from '../../services/database-connection.service';
 import { hasLifecycleHook } from '@angular/compiler/src/lifecycle_reflector';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
@@ -15,10 +15,11 @@ export class UsuarioComponent implements OnInit {
 	@Input() usuarioLoggeado;
 	@Output() usuarioGuardado = new EventEmitter();
 
-	especialistas = ["Medicina General", "Odontologia", "Oftalmologia"];
+	//especialistas = ["Medicina General", "Odontologia", "Oftalmologia", "Otra Especialidad"];
+	especialistas = [];
 
 	roles = ["admin", "paciente", "Profesional"];
-
+	especialdadDistinta;
 	horarios = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", 
 				"13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
 
@@ -40,6 +41,12 @@ export class UsuarioComponent implements OnInit {
 				el.classList.add('weekday-selected');
 			});
 		}
+		this.getEspecialidades();
+
+	}
+
+	getEspecialidades(){
+		this.databaseConnection.bringEntity(DataBaseConnectionService.especialidades, this.especialistas);
 	}
 
 	/*
@@ -71,6 +78,17 @@ export class UsuarioComponent implements OnInit {
 				}
 			});
 		});
+
+		if(this.usuario.especialista == 'Otra Especialidad' 
+			&& this.especialdadDistinta != undefined 
+			&& this.especialdadDistinta != null){
+
+			var x;
+			await this.databaseConnection.saveEntity(DataBaseConnectionService.especialidades, {"nombre": this.especialdadDistinta}, x);
+			
+			this.usuario.especialista = this.especialdadDistinta;
+
+		}
 
 		console.log(this.usuario.dias);
 

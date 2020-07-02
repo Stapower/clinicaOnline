@@ -4,7 +4,7 @@
 		<form class="form-style-7">
 			<ul>
 
-				<li>
+				<li *ngIf="!usuario.medico">
 					<label for="name"> Es medico? </label>
 					<input type="radio" id="pregunta1" name="pregunta1" value="Si" [(ngModel)]="usuario.medico">
 					Soy medico
@@ -51,8 +51,14 @@
 				<li *ngIf="usuario.rol == 'Profesional'">
 					<label for="tipo">Especialidad</label>
 					<select id="cars" name="Especialidad" [(ngModel)]="usuario.especialista">
-						<option value="{{p}}" *ngFor="let p of especialistas">{{p}}</option>
+						<option value="{{p.nombre}}" *ngFor="let p of especialistas">{{p.nombre}}</option>
 					</select>
+				</li>
+
+				<li *ngIf="usuario.especialista == 'Otra Especialidad'">
+					<label for="especialidad2">Especialidad</label>
+					<input type="text" name="especialidad2" [(ngModel)]="especialdadDistinta">
+					<span>Especialidad</span>
 				</li>
 
 				<li>
