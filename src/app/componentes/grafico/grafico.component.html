@@ -1,0 +1,26 @@
+<a class="btn" (click)="showGraphic('UsuariosLoggeados')">Usuarios Loggeados</a>
+<a class="btn" (click)="showGraphic('turnosPorEspecialidad')">Turnos y Especialidades</a>
+<a class="btn" (click)="showGraphic('turnosPorDia')">Turnos por dia</a>
+<a class="btn" (click)="showGraphic('turnosPorMedicos')">Turnos de medicos</a>
+<a class="btn" (click)="showGraphic('medicosPorDias')">Dias de trabajo</a>
+
+<button (click)="exportToExcel()" class="btn btn-success">Excel</button>
+
+
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+<div #TABLE>
+	<table class="table table-bordered">
+		<thead class="thead-dark">
+			<!--tr>
+				<th *ngFor="let header of columns">{{header}}</th>
+			</!--tr-->
+		</thead>
+		<tbody>
+			<tr *ngFor="let row of rows; let index=index">
+				<td> {{row}} </td>
+				<td> {{columns[index]}} </td>
+			</tr>
+		</tbody>
+	</table>
+</div>

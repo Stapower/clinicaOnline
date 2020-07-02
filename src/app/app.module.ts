@@ -28,6 +28,7 @@ import{PdfMakeWrapper} from "pdfmake-wrapper";
 import { SigninComponent } from './componentes/signin/signin.component';
 import { UploadImageComponent } from './componentes/upload-image/upload-image.component';
 import { ListaUsuarioComponent } from './componentes/usuario/lista-usuario/lista-usuario.component';
+import { GraficoComponent } from './componentes/grafico/grafico.component';
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -45,7 +46,8 @@ PdfMakeWrapper.setFonts(pdfFonts);
     UsuarioComponent,
     SigninComponent,
     UploadImageComponent,
-    ListaUsuarioComponent
+    ListaUsuarioComponent,
+    GraficoComponent
   ],
   imports: [
     BrowserModule,

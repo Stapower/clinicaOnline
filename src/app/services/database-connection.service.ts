@@ -10,7 +10,7 @@ import firebaseConfig from '../../environments/environment';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
@@ -116,6 +116,39 @@ export class DataBaseConnectionService {
 			});
 		});
 		*/
+	}
+
+
+	
+	async bringEntityWithEventEmmiter(path, returnObject) {
+		console.log("bringEntity");
+		//var returnObject = new Array(); 
+
+
+		var imageRef = await this.afs.collection<any>(path);
+
+		await imageRef.get().forEach(snapshot => {
+			var array = new Array();
+			console.log("before snapshto foreach");
+			returnObject.length = 0;
+
+			var postData = snapshot.forEach(doc => {
+				console.log("inside snapshto foreach");
+
+				var postData = doc.data();
+				console.log(doc.id, " => ", postData);
+				postData.id = doc.id;
+				//returnObject.next(postData);
+				returnObject.push(postData);
+			})
+			console.log("after snapshto foreach");
+
+			//returnObject = array;
+			console.log(returnObject);
+			//return returnObject;
+		});
+
+		return returnObject;
 	}
 
 	bringEntityWithFilterDocument(path, returnObject, filterDocument){
@@ -243,6 +276,9 @@ export class DataBaseConnectionService {
 		var imageRef = await this.afs.collection(path).ref;
 		await imageRef.doc("/" + id).set(newObject).then(succ => { console.log("update completed"); });
 	}
+
+
+
 	//{"peliculaId" : this.pelicula.id}
 	async bringUserByEmail(path, email, finaluser, finalUserStatic) {
 		console.log("bringEntity with email", email);
@@ -313,6 +349,52 @@ export class DataBaseConnectionService {
 			return returnObject;
 		});*/
 	}
+
+
+	async saveConnectedDate(path, email) {
+		console.log("bringEntity with email", email);
+		/*var imageRef2 = this.afs.collection<any>(path).get(keyValueJson).forEach(record => {
+			console.log("record", record);
+
+			record.docs.forEach(doc=> {
+								console.log("doc", doc);
+								returnObject = doc.data();
+							})
+			});*/
+
+		var imageRef = await this.afs.collection<any>(path);
+
+		var subscription = await imageRef.snapshotChanges().subscribe(snapshot => {
+			var array = new Array();
+			console.log("before snapshot foreach", snapshot);
+			
+			var postDataFinal = snapshot.forEach(doc => {
+				console.log("docforEach", doc);
+
+				var postData = doc.payload.doc.data();
+				postData.id = doc.payload.doc.id;
+				//console.log("postData", postData);
+				console.log("saveConnectedDate postData", postData);
+
+				if (postData.email == email) {
+
+					var d = new Date().toDateString();
+					postData.lastConnection = d;
+
+					console.log("Before saving  time", postData().lastConnection);
+					subscription.unsubscribe();
+					imageRef.doc("/" + doc.payload.doc.id).set(postData);
+					console.log("Saved time", postData().lastConnection);
+
+				}
+
+				console.log("Final saveConnectedDate postData", postData);
+			});
+
+		} );
+	}
+
+
 
 
 	async login(user, finalUser){
