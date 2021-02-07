@@ -12,7 +12,7 @@ export class CaptchaValidationService {
 
   validateCaptcha(token) {
 
-    var url = "recaptcha/api/siteverify?secret=" + "6Lc8X6cZAAAAAGEcKd0N0NVmGm4nWAGOeoZXJmDn" + "&response=" + token;
+    var url = "recaptcha/api/siteverify?secret=" + "6LcGsqwZAAAAAEGd0oHUUaD0HPLzBC7jRm7EiCE3" + "&response=" + token;
     if(token == null || token == undefined){
       throw new TypeError("Token invalido");
     }

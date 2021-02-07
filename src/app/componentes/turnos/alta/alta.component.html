@@ -1,3 +1,14 @@
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+</head>
+
 <div class="card mb-4 shadow-sm">
 	<div class="card-header">
 		<h4 class="my-0 font-weight-normal">Alta de Turno</h4>
@@ -15,8 +26,8 @@
 				</li>
 				<li>
 					<label for="tipo">Especialista</label>
-					<select id="cars" name="tipo" [(ngModel)]="turno.especialista">
-						<option value="{{p}}" *ngFor="let p of especialistas">{{p}}</option>
+					<select id="cars" name="tipo" [(ngModel)]="turno.especialista" (change)="emptyDating()">
+						<option value="{{p.nombre}}" *ngFor="let p of especialistas">{{p.nombre}}</option>
 					</select>
 				</li>
 				<li>
@@ -26,14 +37,27 @@
 				</li>
 
 				<li>
+
 					<label for="url">Fecha de turno</label>
-					<input type="date" name="url" maxlength="100" [(ngModel)]="turno.fecha">
+					<input type="date" min="2021-02-03" max="2021-02-18" name="url" maxlength="100"
+						[(ngModel)]="turno.fecha" (change)="getTiming()">
+
 					<span>fecha de turno</span>
 				</li>
-				<!--span>No hay presupuesto para spinner, primero dar de alta la pelicula y despues seleccionar el turno (darle unos segundos por las llamadas a BD)</!--span-->
+
+				<div *ngIf="users != null && users !== undefined">
+					<div *ngFor="let user of users">
+						<p> Doctor: {{user.nombre}}</p>
+						<div *ngIf="user.rol == 'Profesional'">
+							<button *ngFor="let hour of user.hoursTime" class="btn btn-success" (click)="saveTime(user, hour)">
+								{{hour}} </button>
+						</div>
+						<br>
+					</div>
+				</div>
 
 				<li>
-					<button type="button" class="btn btn-lg btn-block btn-primary" (click)="crear()">Alta</button>
+					<button type="button" class="btn btn-lg btn-blopck btn-primary" (click)="crear()">Alta</button>
 				</li>
 			</ul>
 		</form>

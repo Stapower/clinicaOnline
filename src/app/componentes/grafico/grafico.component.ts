@@ -21,7 +21,8 @@ export class GraficoComponent implements OnInit {
 	@Input() usuario;
 	@ViewChild('TABLE') table: ElementRef;
 	displayedColumns = ['position', 'name', 'weight', 'symbol'];
-
+	filterStartDate;
+	filterEndDate;
 	/*
     
 	1- De los profesionales:
@@ -44,28 +45,60 @@ export class GraficoComponent implements OnInit {
 	showGraphic(value) {
 		this.columns.length = 0;
 		this.rows.length = 0;
+
+		console.info("SHOW - ", value);
+
 		switch (value) {
 			case "UsuariosLoggeados":
 				var allUsers = [];
 
+				console.log(this.filterStartDate);
+				console.log(this.filterEndDate);
+
 				this.databaseConnection.bringEntityWithEventEmmiter(DataBaseConnectionService.users, allUsers).then(result => {
 					console.log("Todos los usuarios", result);
 					var array = [];
-					var total = (100 / result.length);
-					result.forEach(element => {
-						if (element.lastConnection == undefined || element.lastConnection == null) {
+
+					var lastConnectedDate;
+					//var total = (100 / result.length);
+					result.forEach(user => {
+						if (user.lastConnections == undefined || user.lastConnections == null) {
 							return;
 						}
-						var d = new Date(element.lastConnection).toDateString();
-						console.log("date", d);
+						//var total = element.lastConnections.length;
+						var total = 0;
 
-						this.columns.push(total);
-						this.rows.push(element.apellido + ", " + element.nombre);
+						user.lastConnections.forEach(element => {
+							console.log("last connection: ", element);
 
-						array.push({ "y": total, "label": d + " - " + element.apellido + ", " + element.nombre });
+							var d = new Date(element);					
+							console.log("last connection to date: ", d);
+
+
+
+							if(this.isDateBetween(d,
+								this.filterStartDate != null ? new Date(this.filterStartDate) : null,
+								this.filterEndDate != null ? new Date(this.filterEndDate) : null)
+								){
+								console.log("isDateBetween ");
+
+								total ++;
+
+								//this.columns.push(total);
+								this.columns.push(d);
+								this.rows.push(user.apellido + ", " + user.nombre);
+								lastConnectedDate = d.toDateString();
+							}
+
+						});
+
+						if(lastConnectedDate)
+							array.push({ "y": total, "label": lastConnectedDate + " - " + user.apellido + ", " + user.nombre });
 					});
+
 					this.generateChart("Usuarios Loggeados", array);
 				});
+
 				break;
 
 			case "turnosPorEspecialidad":
@@ -259,6 +292,34 @@ export class GraficoComponent implements OnInit {
 
 	}
 
+	isDateBetween(date1, minDate, maxDate){
+
+		console.log("date1", date1);
+		console.log("minDate", minDate);
+		console.log("maxDate", maxDate);
+
+		var minDateTime;
+		var maxDateTime;
+
+		if(minDate == null || minDate == undefined){
+			minDateTime = 0;
+		}
+		else
+			minDateTime = minDate.getTime();
+
+		if(maxDate == null || maxDate == undefined){
+			maxDateTime = 999999999999999999999999999999;
+		}
+		else
+			maxDateTime = maxDate.getTime();
+		
+		if(date1.getTime() >= minDateTime && date1.getTime() <= maxDateTime){
+			return true;
+		}
+
+		return false;
+	}
+
 	parseNumberIntoDay(dia){
 		switch(dia){
 			case "1":
@@ -306,12 +367,12 @@ export class GraficoComponent implements OnInit {
 			animationEnabled: true,
 			exportEnabled: true,
 			title: {
-				text: "Basic Column Chart in Angular"
+				text: "Datos en formato de Columna"
 			},
 			data: [{
 				type: "column",
 				dataPoints: [
-					{ y: 71, label: "Apple" },
+					/*{ y: 71, label: "Apple" },
 					{ y: 55, label: "Mango" },
 					{ y: 50, label: "Orange" },
 					{ y: 65, label: "Banana" },
@@ -319,7 +380,7 @@ export class GraficoComponent implements OnInit {
 					{ y: 68, label: "Pears" },
 					{ y: 28, label: "Grapes" },
 					{ y: 34, label: "Lychee" },
-					{ y: 14, label: "Jackfruit" }
+					{ y: 14, label: "Jackfruit" }*/
 				]
 			}]
 		});

@@ -1,4 +1,5 @@
 <a class="btn" (click)="showGraphic('UsuariosLoggeados')">Usuarios Loggeados</a>
+
 <a class="btn" (click)="showGraphic('turnosPorEspecialidad')">Turnos y Especialidades</a>
 <a class="btn" (click)="showGraphic('turnosPorDia')">Turnos por dia</a>
 <a class="btn" (click)="showGraphic('turnosPorMedicos')">Turnos de medicos</a>
@@ -6,7 +7,11 @@
 
 <button (click)="exportToExcel()" class="btn btn-success">Excel</button>
 
-
+<div>
+	<input type="date" [(ngModel)]="filterStartDate">
+	<input type="date" [(ngModel)]="filterEndDate">
+</div>
+	
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
 <div #TABLE>

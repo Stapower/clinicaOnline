@@ -1,3 +1,10 @@
+.popover {
+    left: 40% !important;
+}
+.btn {
+    margin: 1%;
+}
+
 .form-style-7{
 	max-width:400px;
 	margin:50px auto;

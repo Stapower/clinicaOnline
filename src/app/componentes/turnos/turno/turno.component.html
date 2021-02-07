@@ -283,6 +283,23 @@
 			</ul>
 		</div>
 
+
+		<div *ngIf="usuario.rol === 'Profesional'">
+
+			<ul class="list-unstyled mt-3 mb-4" *ngFor="let extraGeneric of turno.genericDinamicFields">
+				<li ng-hide = "extraGeneric.key"> {{extraGeneric.key}} </li>	
+				<input ng-hide = "!extraGeneric.key" type="text" name="url" maxlength="280" name="extraDataValue" [(ngModel)]="extraGeneric.key">
+
+				<input type="text" name="url" maxlength="280" name="extraDataValue" [(ngModel)]="extraGeneric.value">
+			</ul>
+
+			<ul class="list-unstyled mt-3 mb-4">
+				<li> Agregar datos Genericos para futuras consultas</li>
+				<button class="plus-button plus-button--large" (click)="addDatosGenericos()"> + </button>
+			</ul>
+
+		</div>
+
 		<div *ngIf="usuario.rol === 'Profesional'">
 
 			<ul class="list-unstyled mt-3 mb-4" *ngFor="let extra of turno.extras">
@@ -292,8 +309,8 @@
 
 			</ul>
 
-			<ul class="list-unstyled mt-3 mb-4">
-				<li> Agregar datos </li>
+			<ul class="list-unstyled mt-3 mb-4" *ngIf="(turno.extras != null && turno.extras.length < 3) || (turno.extras == null || turno.extras == 'undefined')">
+				<li> Agregar datos unicos de este turno (Maximo 3) </li>
 				<button class="plus-button plus-button--large" (click)="addExtra()"> + </button>
 			</ul>
 
@@ -455,11 +472,11 @@
 						<li> Algun comentario extra?</li>
 						<div *ngIf="usuario.rol === 'Profesional'">
 							<textarea name="url" maxlength="280" name="name"
-								[(ngModel)]="comentarioExtraProfesinoal"> </textarea>
+								[(ngModel)]="turno.cuestionario.comentarioExtraProfesinoal"> </textarea>
 						</div>
 
 						<div *ngIf="usuario.rol !== 'Profesional'">
-							<h5>{{comentarioExtraProfesinoal}}</h5>
+							<h5>{{turno.cuestionario.comentarioExtraProfesinoal}}</h5>
 						</div>
 
 					</td>
@@ -470,11 +487,11 @@
 
 						<div *ngIf="usuario.rol !== 'Profesional'">
 							<textarea name="url" maxlength="280" name="name"
-								[(ngModel)]="comentarioExtraCliente"> </textarea>
+								[(ngModel)]="turno.cuestionario.comentarioExtraCliente"> </textarea>
 						</div>
 
 						<div *ngIf="usuario.rol === 'Profesional'">
-							<h5>{{comentarioExtraCliente}}</h5>
+							<h5>{{turno.cuestionario.comentarioExtraCliente}}</h5>
 						</div>
 
 					</td>
@@ -488,7 +505,7 @@
 			<!--*ngIf="usuario.rol === 'Profesional'"-->
 			<ul class="list-unstyled mt-3 mb-4" *ngFor="let foto of turno.fotos">
 
-				<li *ngIf="turno.fotos"><img src="{{foto}}" width="250px" height="150px"></li>
+				<li *ngIf="foto"><img src="{{foto}}" width="250px" height="150px"></li>
 
 			</ul>
 		</div>
@@ -499,7 +516,7 @@
 			<button type="button" class="btn btn-lg btn-block btn-primary" (click)="guardar()">Guardar turno</button>
 		</ul>
 
-		<ul *ngIf="usuario.rol !== 'Profesional'" class="list-unstyled mt-3 mb-4">
+		<ul *ngIf="usuario.rol !== 'Profesional' && turno.estado !== 'Finalizado'" class="list-unstyled mt-3 mb-4">
 			<button type="button" class="btn btn-lg btn-block btn-primary" (click)="cancelar()">Cancelar turno</button>
 		</ul>
 

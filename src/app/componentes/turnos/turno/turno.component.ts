@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DataBaseConnectionService } from './../../../services/database-connection.service';
 import { getMaxListeners } from 'cluster';
@@ -18,7 +19,35 @@ export class TurnoComponent implements OnInit {
 	}
 	ngOnInit(): void {
 		console.log(this.usuario);
-		console.log("before going to send email");
+	}
+
+
+
+	ngDoCheck(){
+
+		if(this.usuario == null || this.usuario == undefined
+			|| this.turno == null || this.turno == undefined)
+				return;
+
+
+		if(this.usuario.datosConsulta != null && this.usuario.datosConsulta !== undefined)
+			this.usuario.datosConsulta.forEach(element => {
+
+				if(this.turno.genericDinamicFields == null || this.turno.genericDinamicFields == undefined){
+					this.turno.genericDinamicFields = [{ "key": element.key, "value": "" }];
+				}
+				
+				var isTheElementInArray = false;
+				if(this.turno.genericDinamicFields.length > 0)
+					this.turno.genericDinamicFields.forEach(generic => {
+						if(generic.key == element.key){
+							isTheElementInArray = true;
+						}
+					});
+
+					if(!isTheElementInArray)
+						this.turno.genericDinamicFields.push({ "key": element.key, "value": "" });
+			});
 	}
 	estados = [
 		"Finalizado"
@@ -26,10 +55,6 @@ export class TurnoComponent implements OnInit {
 		, "Rechazado"
 		, "Pendiente"
 	];
-
-
-	
-
 
 	profesionalCuestionario = [
 		{
@@ -78,6 +103,9 @@ async guardar() {
 	if (this.usuario.rol == 'Profesional') {
 		this.turno.asignado = this.usuario;
 	}
+
+
+	this.saveGenericFields();
 
 	/*if(this.extras != null && this.extras.length > 0){
 		if(this.turno.extras != null){
@@ -279,6 +307,15 @@ dejarResena() {
 	}
 }
 
+addDatosGenericos() {
+
+	if (this.turno.genericDinamicFields != null && this.turno.genericDinamicFields.length > 0)
+		this.turno.genericDinamicFields.push({ "key": "", "value": "" });
+	else {
+		this.turno.genericDinamicFields = [{ "key": "", "value": "" }];
+	}
+}
+
 addExtra() {
 
 	if (this.turno.extras != null && this.turno.extras.length > 0)
@@ -295,6 +332,39 @@ saveUrl(event) {
 
 	this.turno.fotos.push(event);
 
+}
+
+saveGenericFields(){
+
+	if(this.turno.genericDinamicFields != null && this.turno.genericDinamicFields.length > 0){
+		if(this.usuario.datosConsulta != null && this.usuario.datosConsulta !== undefined){
+			
+			this.turno.genericDinamicFields.forEach(turnoField => {
+				var isFieldInUser = false;	
+				
+				this.usuario.datosConsulta.forEach(userField => {
+					
+					if(userField.key == turnoField.key)
+						isFieldInUser = true;
+
+				});
+
+				if(!isFieldInUser){
+					this.usuario.datosConsulta.push({"key": turnoField.key});
+				}
+
+			});
+		}
+		else{
+			this.usuario.datosConsulta = [];
+			this.turno.genericDinamicFields.forEach(turnoField => {
+				this.usuario.datosConsulta.push({"key" : turnoField.key});
+			});
+		}
+		this.databaseConnection.saveExistingEntity(DataBaseConnectionService.users, this.usuario, this.usuario.id);
+
+	}
+	
 }
 
 }

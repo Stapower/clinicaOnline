@@ -118,6 +118,80 @@ export class DataBaseConnectionService {
 		*/
 	}
 
+	bringDoctorTiming(path, returnObject, dayOfTheWeek, hours, especialista) {
+		console.log("bringEntity");
+		//var returnObject = new Array(); 
+
+
+		var imageRef = this.afs.collection<any>(path);
+
+		imageRef.snapshotChanges().forEach(snapshot => {
+			var array = new Array();
+			console.log("before snapshto foreach");
+			returnObject.length = 0;
+			var postData = snapshot.forEach(doc => {
+				console.log("inside snapshto foreach");
+
+				var postData = doc.payload.doc.data();
+				console.log(doc.payload.doc.id, " => ", postData);
+				postData.id = doc.payload.doc.id;
+				
+				
+			if(postData.rol == 'Profesional' 
+				&& postData.dias != null && postData.dias != undefined
+				&& postData.horarioDesde != null && postData.horarioDesde != undefined
+				&& postData.especialista == especialista){
+
+				postData.dias.forEach(element => {
+					if(element == dayOfTheWeek){
+						returnObject.push(postData);
+						return;
+					}
+				});
+				
+				
+					  
+					  var flag = false;
+					  for (let index = 0; index < hours.length; index++) {
+						  
+						if(hours[index] == postData.horarioDesde)
+						  flag = true;
+			  
+						  if(flag){
+							if(postData.hoursTime == null || postData.hoursTime == undefined)
+							postData.hoursTime = new Array();
+			  
+							postData.hoursTime.push(hours[index]);
+			  
+							if(hours[index] == postData.horarioHasta){
+							  flag = false;
+							}
+						  }
+					  }	
+			}
+			})
+			console.log("after snapshto foreach");
+
+			//returnObject = array;
+			console.log(returnObject);
+			return returnObject;
+		});
+
+		/*await imageRef.get().then(function (querySnapshot) {
+			console.log("querySnapshot", querySnapshot);
+			console.log("path" + path);
+
+			querySnapshot.forEach(function (doc) {
+				var postData = doc.data();
+				console.log(doc.id, " => ", postData);
+				postData.id = doc.id;
+				array.push(postData);
+
+			});
+		});
+		*/
+	}
+
 
 	
 	async bringEntityWithEventEmmiter(path, returnObject) {
@@ -361,30 +435,33 @@ export class DataBaseConnectionService {
 								returnObject = doc.data();
 							})
 			});*/
+					
+		var imageRef = this.afs.collection<any>(path);
 
-		var imageRef = await this.afs.collection<any>(path);
-
-		var subscription = await imageRef.snapshotChanges().subscribe(snapshot => {
+		imageRef.snapshotChanges().forEach(snapshot => {
 			var array = new Array();
-			console.log("before snapshot foreach", snapshot);
+			console.log("SAVE DATE FOR", snapshot);
 			
-			var postDataFinal = snapshot.forEach(doc => {
-				console.log("docforEach", doc);
+			var postData = snapshot.forEach(doc => {
 
+				//var postData = doc.payload.doc.data();
 				var postData = doc.payload.doc.data();
-				postData.id = doc.payload.doc.id;
 				//console.log("postData", postData);
-				console.log("saveConnectedDate postData", postData);
 
 				if (postData.email == email) {
 
 					var d = new Date().toDateString();
-					postData.lastConnection = d;
+					console.log("DATE", d);
 
-					console.log("Before saving  time", postData().lastConnection);
-					subscription.unsubscribe();
+					if(postData.lastConnections == null || postData.lastConnections == undefined)
+						postData.lastConnections = new Array();
+
+					postData.lastConnections.push(d);
+
+					console.log("Before saving  time", postData.lastConnection);
+
 					imageRef.doc("/" + doc.payload.doc.id).set(postData);
-					console.log("Saved time", postData().lastConnection);
+					console.log("Saved time", postData.lastConnection);
 
 				}
 

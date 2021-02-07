@@ -54,7 +54,8 @@
 			
 			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'" class="btn" (click)="referTo('listaTurnos')">Lista Turnos</a>
 
-			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol != 'admin' && (loggedUser[0].medico == 'Si' && loggedUser[0].isActivated == 'true')"class="btn" (click)="referTo('misTurnos')">Mis Turnos</a>
+			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol != 'admin' "class="btn" (click)="referTo('misTurnos')">Mis Turnos</a>
+			<!--(loggedUser[0].medico == 'Si' && loggedUser[0].isActivated == 'true')-->
 
 			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'"class="btn" (click)="referTo('listaUsuarios')">Lista Usuarios</a>
 
@@ -80,7 +81,9 @@
 			</div>
 		</div>
 		
-		<button class="btn" onClick="print()"><i class="fa fa-download"></i> Download</button>
+		<div *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'">
+			<button class="btn" onClick="print()"><i class="fa fa-download"></i> Download</button>
+		</div>
 
 	</body>
 

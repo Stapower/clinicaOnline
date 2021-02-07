@@ -21,6 +21,7 @@ import { TurnoComponent } from './componentes/turnos/turno/turno.component';
 import { MisTurnosComponent } from './componentes/turnos/mis-turnos/mis-turnos.component';
 import { UsuarioComponent } from './componentes/usuario/usuario.component';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -29,6 +30,17 @@ import { SigninComponent } from './componentes/signin/signin.component';
 import { UploadImageComponent } from './componentes/upload-image/upload-image.component';
 import { ListaUsuarioComponent } from './componentes/usuario/lista-usuario/lista-usuario.component';
 import { GraficoComponent } from './componentes/grafico/grafico.component';
+
+import { MatButtonModule } from  
+    '@angular/material/button'; 
+import { MatButtonToggleModule } from  
+    '@angular/material/button-toggle'; 
+import { MatInputModule } from  
+    '@angular/material/input'; 
+import { MatFormFieldModule } from  
+    '@angular/material/form-field'; 
+import { MatNativeDateModule } from  
+    '@angular/material/core'; 
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -59,8 +71,14 @@ PdfMakeWrapper.setFonts(pdfFonts);
     HttpClientModule,
     RecaptchaModule,  //this is the recaptcha main module
     RecaptchaFormsModule, //this is the module for form incase form validation
+    MatDatepickerModule,
+    MatButtonModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonToggleModule
    ],
-  providers: [DataBaseConnectionService, LoginComponent, CaptchaValidationService],
+  providers: [DataBaseConnectionService, LoginComponent, CaptchaValidationService, MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
