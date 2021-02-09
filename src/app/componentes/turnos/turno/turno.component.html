@@ -497,6 +497,74 @@
 					</td>
 				</tr>
 
+				<div *ngIf="turno.cuestionario.cuestionarioProfesional[2]">
+
+					<tr>
+						<td>
+
+								<li> {{turno.cuestionario.cuestionarioProfesional[2].pregunta}}</li>
+
+								<div *ngIf="usuario.rol === 'Profesional'">
+									<input type="range" 
+										[(ngModel)]="turno.cuestionario.cuestionarioProfesional[2].respuesta">
+								</div>
+
+								<div *ngIf="usuario.rol !== 'Profesional'">
+									<input type="range" 
+										[(ngModel)]="turno.cuestionario.cuestionarioProfesional[2].respuesta" disabled>
+								</div>
+
+
+						</td>
+
+
+						<td>
+							<li> {{turno.cuestionario.cuestionarioCliente[2].pregunta}} </li>
+							<div *ngIf="usuario.rol !== 'Profesional'">
+								<input type="range"
+									[(ngModel)]="turno.cuestionario.cuestionarioCliente[2].respuesta">
+							</div>
+
+							<div *ngIf="usuario.rol === 'Profesional'">
+								<input type="range" 
+								[(ngModel)]="turno.cuestionario.cuestionarioProfesional[2].respuesta" disabled>						</div>
+						</td>
+					</tr>
+
+				</div>
+				<div *ngIf="turno.cuestionario.cuestionarioProfesional[3]">
+					<tr>
+						<td>
+							<li> {{turno.cuestionario.cuestionarioProfesional[3].pregunta}}</li>
+
+							<div *ngIf="usuario.rol === 'Profesional'">
+								<input type="number" 
+									[(ngModel)]="turno.cuestionario.cuestionarioProfesional[3].respuesta">
+							</div>
+
+							<div *ngIf="usuario.rol !== 'Profesional'">
+								<input type="number" 
+									[(ngModel)]="turno.cuestionario.cuestionarioProfesional[3].respuesta" disabled>
+							</div>
+
+						</td>
+
+
+						<td>
+							<li> {{turno.cuestionario.cuestionarioCliente[3].pregunta}} </li>
+							<div *ngIf="usuario.rol !== 'Profesional'">
+								<input type="number"
+									[(ngModel)]="turno.cuestionario.cuestionarioCliente[3].respuesta">
+							</div>
+
+							<div *ngIf="usuario.rol === 'Profesional'">
+								<input type="number" 
+								[(ngModel)]="turno.cuestionario.cuestionarioProfesional[3].respuesta" disabled>						</div>
+						</td>
+					</tr>
+			</div>
+
+
 			</tbody>
 		</table>
 
@@ -512,13 +580,21 @@
 
 		<app-upload-image (imageUrl)="saveUrl($event)"></app-upload-image>
 
-		<ul class="list-unstyled mt-3 mb-4">
+		<ul>
+			<app-captcha-component [usuario]=usuario (captchaResult)="captchaResults($event)"> </app-captcha-component>
+		</ul>
+
+
+
+
+		<ul *ngIf="isCaptchaValid" class="list-unstyled mt-3 mb-4">
 			<button type="button" class="btn btn-lg btn-block btn-primary" (click)="guardar()">Guardar turno</button>
 		</ul>
 
 		<ul *ngIf="usuario.rol !== 'Profesional' && turno.estado !== 'Finalizado'" class="list-unstyled mt-3 mb-4">
 			<button type="button" class="btn btn-lg btn-block btn-primary" (click)="cancelar()">Cancelar turno</button>
 		</ul>
+
 
 	</div>
 </div>

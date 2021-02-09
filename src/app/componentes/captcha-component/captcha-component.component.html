@@ -1,0 +1,21 @@
+<div > 
+	<ul>
+		<div> 
+			<div class="capt"> 
+				<h2 type="text" id="mainCaptcha">{{captchaCode}}</h2>
+				<p>
+					<input type="button" (click)="captcha()" value="Refresh Captcha"/>
+				</p> 
+
+				<li>
+					<input type="text"  name="captchaInput" [(ngModel)]="userCaptchaInput" />    
+				</li>         
+
+				<input id="Button1" type="button" value="Check" (click)="validCaptcha()"/>
+				<input *ngIf="usuario != null && usuario != undefined && usuario.rol == 'Profesional'" id="Button1" type="button" value="Deshabilitar" (click)="deactivateCaptcha()"/>
+				
+				
+			</div>
+		</div>
+	</ul>
+</div>

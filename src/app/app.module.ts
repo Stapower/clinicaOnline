@@ -40,7 +40,8 @@ import { MatInputModule } from
 import { MatFormFieldModule } from  
     '@angular/material/form-field'; 
 import { MatNativeDateModule } from  
-    '@angular/material/core'; 
+    '@angular/material/core';
+import { CaptchaComponentComponent } from './componentes/captcha-component/captcha-component.component'; 
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -59,7 +60,8 @@ PdfMakeWrapper.setFonts(pdfFonts);
     SigninComponent,
     UploadImageComponent,
     ListaUsuarioComponent,
-    GraficoComponent
+    GraficoComponent,
+    CaptchaComponentComponent
   ],
   imports: [
     BrowserModule,

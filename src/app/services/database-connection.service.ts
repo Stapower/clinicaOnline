@@ -435,10 +435,12 @@ export class DataBaseConnectionService {
 								returnObject = doc.data();
 							})
 			});*/
-					
-		var imageRef = this.afs.collection<any>(path);
+		
+		/*imageRef.snapshotChanges().forEach*/
+		//var subscription = imageRef.snapshotChanges().subscribe();
 
-		imageRef.snapshotChanges().forEach(snapshot => {
+		var imageRef = this.afs.collection<any>(path);
+		var subscription = imageRef.snapshotChanges().subscribe(snapshot => {
 			var array = new Array();
 			console.log("SAVE DATE FOR", snapshot);
 			
@@ -462,7 +464,7 @@ export class DataBaseConnectionService {
 
 					imageRef.doc("/" + doc.payload.doc.id).set(postData);
 					console.log("Saved time", postData.lastConnection);
-
+					subscription.unsubscribe();
 				}
 
 				console.log("Final saveConnectedDate postData", postData);
@@ -562,6 +564,35 @@ export class DataBaseConnectionService {
 						turnos.push(postData);
 				}
 			})
+			console.log("after snapshto foreach");
+			console.log(turnos);
+			return turnos;
+		}));
+	}
+
+	bringEntityWithFilterString2(path, turnos, filterWord){
+		console.log("bringEntityWithFilterString");
+
+		var imageRef = this.afs.collection<any>(path);
+
+		imageRef.get().forEach((snapshot => {
+		//imageRef.snapshotChanges().forEach(snapshot => {
+			console.log("before snapshto foreach");
+			turnos.length = 0;
+			var postData = snapshot.forEach(doc => {
+				console.log("inside snapshto foreach");
+
+				var postData = doc.data();
+				console.log(doc.id, " => ", postData);
+				postData.id = doc.id;
+				
+				var jsonString = JSON.stringify(postData);
+				
+				if(jsonString.includes(filterWord))
+					turnos.push(postData);
+				else if(filterWord == null || filterWord == undefined)
+					turnos.push(postData);
+			});
 			console.log("after snapshto foreach");
 			console.log(turnos);
 			return turnos;

@@ -17,6 +17,7 @@ export class ListadoComponent implements OnInit {
 
   @Output() turnoSeleccionado = new EventEmitter();
   @Input() rol;
+  filterString;
 
 
   turnos = [];
@@ -29,5 +30,13 @@ export class ListadoComponent implements OnInit {
   seleccionar(turno){
     this.turnoSeleccionado.emit(turno);
   }
+
+
+  enter(event){
+
+		if(event.key == "Enter"){
+				this.databaseConnection.bringEntityWithFilterString2(DataBaseConnectionService.turno, this.turnos, this.filterString);
+		}
+	}
 
 }

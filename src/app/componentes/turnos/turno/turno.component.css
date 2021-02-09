@@ -371,3 +371,31 @@ textarea{
 }
 
 
+.capt{
+	background-color:grey;
+	width: 300px;
+	height:100px;
+	
+}
+
+#mainCaptcha{
+	position: relative;
+	left : 60px;
+	top: 5px;
+	
+}
+
+#refresh{
+	position:relative;
+	left:230px;
+	width:30px;
+	height:30px;
+	bottom:45px;
+	background: rgb(99, 96, 96);
+}
+
+#txtInput, #Button1{
+	position: relative;
+	left:40px;
+	bottom: 40px;
+}
