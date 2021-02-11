@@ -701,8 +701,8 @@ export class GraficoComponent implements OnInit {
 							console.log("splitted * 100 to fixed",  (splitted*100).toFixed(3));
 
 								arrayCliente.push({
-									"y": ((value/total) * 100).toFixed(3),
-									"label": key
+									"y": ((value/total) * 100).toFixed(2),
+									"label": key + " "+((value/total) * 100).toFixed(2) + "%"
 								});
 						});
 

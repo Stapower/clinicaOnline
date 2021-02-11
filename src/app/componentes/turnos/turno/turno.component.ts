@@ -54,6 +54,7 @@ export class TurnoComponent implements OnInit {
 		, "Aceptado"
 		, "Rechazado"
 		, "Pendiente"
+		, "Cancelado"
 	];
 
 	profesionalCuestionario = [

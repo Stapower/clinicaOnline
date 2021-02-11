@@ -223,7 +223,7 @@
 
 
 		<ul class="list-unstyled mt-3 mb-4">
-			<li> Fecha De Nacimiento: {{turno.fecha}} </li>
+			<li> Fecha de Turno: {{turno.fecha}} </li>
 		</ul>
 
 		<ul class="list-unstyled mt-3 mb-4">
@@ -254,7 +254,7 @@
 		</div>
 
 
-		<ul class="list-unstyled mt-3 mb-4">
+		<ul *ngIf = "usuario.rol != 'admin'"class="list-unstyled mt-3 mb-4">
 			<li> Agregar Comentario </li>
 			<textarea name="url" maxlength="280" name="name" [(ngModel)]="comentarioNuevo"> </textarea>
 		</ul>
@@ -413,7 +413,7 @@
 
 					<td>
 						<li> {{turno.cuestionario.cuestionarioCliente[0].pregunta}}</li>
-						<div *ngIf="usuario.rol !== 'Profesional'">
+						<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
 							<input type="radio" id="pregunta2" name="pregunta2" value="Si"
 								[(ngModel)]="turno.cuestionario.cuestionarioCliente[0].respuesta">
 							<label for="pregunta2">Si</label><br>
@@ -422,7 +422,7 @@
 							<label for="pregunta2">No</label><br>
 						</div>
 
-						<div *ngIf="usuario.rol == 'Profesional'">
+						<div *ngIf="usuario.rol == 'Profesional' || usuario.rol == 'admin'">
 							<h5>{{turno.cuestionario.cuestionarioCliente[0].respuesta}}</h5>
 						</div>
 
@@ -442,7 +442,7 @@
 							<label for="pregunta3">No</label><br>
 						</div>
 
-						<div *ngIf="usuario.rol !== 'Profesional'">
+						<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
 							<h5>{{turno.cuestionario.cuestionarioProfesional[1].respuesta}}</h5>
 						</div>
 
@@ -451,7 +451,7 @@
 
 					<td>
 						<li> {{turno.cuestionario.cuestionarioCliente[1].pregunta}} </li>
-						<div *ngIf="usuario.rol !== 'Profesional'">
+						<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
 							<input type="radio" id="pregunta4" name="pregunta4" value="Si"
 								[(ngModel)]="turno.cuestionario.cuestionarioCliente[1].respuesta">
 							<label for="pregunta4">Si</label><br>
@@ -460,7 +460,7 @@
 							<label for="pregunta4">No</label><br>
 						</div>
 
-						<div *ngIf="usuario.rol === 'Profesional'">
+						<div *ngIf="usuario.rol === 'Profesional' || usuario.rol === 'admin'">
 							<h5>{{turno.cuestionario.cuestionarioCliente[1].respuesta}}</h5>
 						</div>
 					</td>
@@ -485,21 +485,20 @@
 					<td>
 						<li> Algun comentario extra?</li>
 
-						<div *ngIf="usuario.rol !== 'Profesional'">
+						<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
 							<textarea name="url" maxlength="280" name="name"
 								[(ngModel)]="turno.cuestionario.comentarioExtraCliente"> </textarea>
 						</div>
 
-						<div *ngIf="usuario.rol === 'Profesional'">
+						<div *ngIf="usuario.rol === 'Profesional' || usuario.rol == 'admin'">
 							<h5>{{turno.cuestionario.comentarioExtraCliente}}</h5>
 						</div>
 
 					</td>
 				</tr>
 
-				<div *ngIf="turno.cuestionario.cuestionarioProfesional[2]">
 
-					<tr>
+					<tr *ngIf="turno.cuestionario.cuestionarioProfesional[2]">
 						<td>
 
 								<li> {{turno.cuestionario.cuestionarioProfesional[2].pregunta}}</li>
@@ -511,7 +510,7 @@
 
 								<div *ngIf="usuario.rol !== 'Profesional'">
 									<input type="range" 
-										[(ngModel)]="turno.cuestionario.cuestionarioProfesional[2].respuesta" disabled>
+										[(ngModel)]="turno.cuestionario.cuestionarioCliente[2].respuesta" disabled>
 								</div>
 
 
@@ -520,20 +519,18 @@
 
 						<td>
 							<li> {{turno.cuestionario.cuestionarioCliente[2].pregunta}} </li>
-							<div *ngIf="usuario.rol !== 'Profesional'">
+							<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
 								<input type="range"
 									[(ngModel)]="turno.cuestionario.cuestionarioCliente[2].respuesta">
 							</div>
 
-							<div *ngIf="usuario.rol === 'Profesional'">
+							<div *ngIf="usuario.rol === 'Profesional' || usuario.rol == 'admin'">
 								<input type="range" 
 								[(ngModel)]="turno.cuestionario.cuestionarioProfesional[2].respuesta" disabled>						</div>
 						</td>
 					</tr>
 
-				</div>
-				<div *ngIf="turno.cuestionario.cuestionarioProfesional[3]">
-					<tr>
+					<tr *ngIf="turno.cuestionario.cuestionarioProfesional[3]">
 						<td>
 							<li> {{turno.cuestionario.cuestionarioProfesional[3].pregunta}}</li>
 
@@ -552,17 +549,16 @@
 
 						<td>
 							<li> {{turno.cuestionario.cuestionarioCliente[3].pregunta}} </li>
-							<div *ngIf="usuario.rol !== 'Profesional'">
+							<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
 								<input type="number"
 									[(ngModel)]="turno.cuestionario.cuestionarioCliente[3].respuesta">
 							</div>
 
-							<div *ngIf="usuario.rol === 'Profesional'">
+							<div *ngIf="usuario.rol === 'Profesional' || usuario.rol == 'admin'">
 								<input type="number" 
-								[(ngModel)]="turno.cuestionario.cuestionarioProfesional[3].respuesta" disabled>						</div>
+								[(ngModel)]="turno.cuestionario.cuestionarioCliente[3].respuesta" disabled>						</div>
 						</td>
 					</tr>
-			</div>
 
 
 			</tbody>
@@ -578,10 +574,10 @@
 			</ul>
 		</div>
 
-		<app-upload-image (imageUrl)="saveUrl($event)"></app-upload-image>
+		<app-upload-image *ngIf="usuario.rol != 'admin'" (imageUrl)="saveUrl($event)"></app-upload-image>
 
 		<ul>
-			<app-captcha-component [usuario]=usuario (captchaResult)="captchaResults($event)"> </app-captcha-component>
+			<app-captcha-component *ngIf="usuario.rol != 'admin'" [usuario]=usuario (captchaResult)="captchaResults($event)"> </app-captcha-component>
 		</ul>
 
 
@@ -591,7 +587,7 @@
 			<button type="button" class="btn btn-lg btn-block btn-primary" (click)="guardar()">Guardar turno</button>
 		</ul>
 
-		<ul *ngIf="usuario.rol !== 'Profesional' && turno.estado !== 'Finalizado'" class="list-unstyled mt-3 mb-4">
+		<ul *ngIf="usuario.rol !== 'Profesional' && turno.estado !== 'Finalizado' && isCaptchaValid" class="list-unstyled mt-3 mb-4">
 			<button type="button" class="btn btn-lg btn-block btn-primary" (click)="cancelar()">Cancelar turno</button>
 		</ul>
 

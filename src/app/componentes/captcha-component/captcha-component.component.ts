@@ -52,6 +52,11 @@ validCaptcha(){
  var string1 = this.removeSpaces(this.userCaptchaInput);
  var string2 =this.removeSpaces(this.captchaCode);
 
+  if(string2 == ""){
+    this.captcha();
+    return;
+  }
+
  if (string1 == string2){
 	 this.isCaptchaValid = true;
  }else{        

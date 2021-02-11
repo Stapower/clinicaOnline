@@ -109,8 +109,12 @@
   
   <input type="button" value="Cliente con email verdadero" class="login-submit" (click)="setLoginValues('tomynfs2@gmail.com', '123456')">
 
-  <re-captcha class="captcha" (resolved)="resolved($event, '6Lc8X6cZAAAAAMT1NsMdGt6cDbHHAAD5l1b5hopv')" 
-  siteKey="6Lc8X6cZAAAAAMT1NsMdGt6cDbHHAAD5l1b5hopv">  
+  <!-- old =
+    <re-captcha class="captcha" (resolved)="resolved($event, '6Lc8X6cZAAAAAMT1NsMdGt6cDbHHAAD5l1b5hopv')" 
+  siteKey="6Lc8X6cZAAAAAMT1NsMdGt6cDbHHAAD5l1b5hopv"> 
+ -->
+  <re-captcha class="captcha" (resolved)="resolved($event, '6LeEgVEaAAAAAEZzWwpHo_QQPr3MrP4Nd8LQrr2X')" 
+  siteKey="6LeEgVEaAAAAAEZzWwpHo_QQPr3MrP4Nd8LQrr2X">  
   </re-captcha>
 
 </form>

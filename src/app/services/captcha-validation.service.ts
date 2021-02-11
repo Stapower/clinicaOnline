@@ -11,8 +11,9 @@ export class CaptchaValidationService {
 
 
   validateCaptcha(token) {
-
-    var url = "recaptcha/api/siteverify?secret=" + "6LcGsqwZAAAAAEGd0oHUUaD0HPLzBC7jRm7EiCE3" + "&response=" + token;
+//6LeEgVEaAAAAABo_78xCQ2ZeODVpbwhkQnnN95lp
+//old = 6LcGsqwZAAAAAEGd0oHUUaD0HPLzBC7jRm7EiCE3
+    var url = "recaptcha/api/siteverify?secret=" + "6LeEgVEaAAAAABo_78xCQ2ZeODVpbwhkQnnN95lp" + "&response=" + token;
     if(token == null || token == undefined){
       throw new TypeError("Token invalido");
     }
