@@ -25,12 +25,7 @@
 					<input type="text" name="name" [(ngModel)]="turno.documento" disabled readonly>
 					<span>Documento</span>
 				</li>
-				<li>
-					<label for="tipo">Especialista</label>
-					<select id="cars" name="tipo" [(ngModel)]="turno.especialista" (change)="emptyDating()">
-						<option value="{{p.nombre}}" *ngFor="let p of especialistas">{{p.nombre}}</option>
-					</select>
-				</li>
+
 				<li>
 					<label for="url">Descripcion</label>
 					<textarea name="url" maxlength="280" [(ngModel)]="turno.descripcion"> </textarea>
@@ -38,29 +33,57 @@
 				</li>
 
 				<li>
+					<label for="tipo">Especialista</label>
+					<br>
+					<button *ngFor="let p of especialistas" class="btn btn-success" (click)="selectEspecialidad(p.nombre)">
+						{{p.nombre}} </button>
+				</li>
+
+				<!--li>
 
 					<label for="url">Fecha de turno</label>
 					<input type="date" min="2021-02-11" max="2021-02-26" name="url" maxlength="100"
-						[(ngModel)]="turno.fecha" (change)="getTiming()">
+						[(ngModel)]="turno.fecha" (change)="getTiming()" >
+
+					<p [appDirectiva] = "turno.fecha" > {{turno.fecha}}</p>
 
 					<span>fecha de turno</span>
-				</li>
+				</li-->
 
-				<div *ngIf="users != null && users !== undefined">
-					<div *ngFor="let user of users">
-						<p> Doctor: {{user.nombre}}</p>
-						<div *ngIf="user.rol == 'Profesional'">
-							<button *ngFor="let hour of user.hoursTime" class="btn btn-success" (click)="saveTime(user, hour)">
-								{{hour}} </button>
+				<div *ngIf="turnoHorarios != null && turnoHorarios !== undefined && listaHorarios != null && listaHorarios != undefined">
+					<div *ngFor="let key of listaHorarios">
+						<p> Turno para el dia: {{key | datePipe}} </p>
+						
+						<div *ngIf="turnoHorarios.get(key) != null">
+							<div *ngFor="let doctor of turnoHorarios.get(key)">
+								<p [appDirectiva]="doctor"> Doctor: {{doctor.nombre}}, {{doctor.apellido}}</p>
+								<!--[appIsTurnoTaken]="key + '@' + hour + '@' + doctor.documento"-->
+								<button *ngFor="let hour of doctor.hoursTime"  class="btn btn-success" (click)="saveTime(doctor, hour)">
+									{{hour}} </button>
+							</div>
 						</div>
 						<br>
 					</div>
 				</div>
+
+				<!--
+					<div *ngIf="users != null && users !== undefined">
+						<div *ngFor="let user of users">
+							<p> Doctor: {{user.nombre}}</p>
+							<div *ngIf="user.rol == 'Profesional'">
+								<button *ngFor="let hour of user.hoursTime" class="btn btn-success" (click)="saveTime(user, hour)">
+									{{hour}} </button>
+							</div>
+							<br>
+						</div>
+					</div>
+				-->
 				
+				<button class="btn btn-success" (click)=next()>
+					Siguiente semana </button>
 				<ul>
 					<app-captcha-component (captchaResult)="captchaResults($event)"> </app-captcha-component>
 				</ul>
-
 				<ul>
 					<li *ngIf="isCaptchaValid">
 						<button type="button" class="btn btn-lg btn-blopck btn-primary" (click)="crear()">Alta</button>

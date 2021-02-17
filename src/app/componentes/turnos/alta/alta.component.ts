@@ -10,7 +10,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 @Component({
   selector: 'app-alta',
   templateUrl: './alta.component.html',
-  styleUrls: ['./alta.component.css']
+  styleUrls: ['./alta.component.css'],
+
+
 })
 
 
@@ -32,8 +34,10 @@ export class AltaComponent implements OnInit {
     //console.log(" HomeComponent.loggedUser",  HomeComponent.loggedUser);
 
 		this.turno.nombre = this.cliente.nombre;
-		this.turno.documento = this.cliente.documento;
-	
+    this.turno.documento = this.cliente.documento;
+    
+    this.databaseConnection.turnosEnCache();
+
 	/*else if(HomeComponent.loggedUser[0] != null && HomeComponent.loggedUser[0].nombre) {
 		this.turno.nombre = HomeComponent.loggedUser[0].nombre;
 		this.turno.documento = HomeComponent.loggedUser[0].documento;
@@ -43,7 +47,6 @@ export class AltaComponent implements OnInit {
 
 
     this.getEspecialidades();
-
   }
   isCaptchaValid = false;
   captchaCode = "";
@@ -134,10 +137,6 @@ export class AltaComponent implements OnInit {
 		}
 	];
 
-
-  
-
-
   turno = {
     "nombre" : "",
     "id" : "" ,
@@ -187,18 +186,20 @@ export class AltaComponent implements OnInit {
  "Dom"
   ];
 
-  getTiming(){
+  async getTiming(){
     console.log("getTiming");
     if(this.turno.especialista != null && this.turno.especialista !== undefined){
       console.log("SELECTEDDATE - ",this.turno.fecha);
 
-      var date = this.turno.fecha + "T00:00:00";
+      //var date = this.turno.fecha + "T00:00:00";
       //let dateString = '1968-11-16T00:00:00' 
-      let newDate = new Date(date);
+      let newDate = new Date(this.turno.fecha);
       
-      var day = this.weekday[newDate.getDay()];
 
-      this.databaseConnection.bringDoctorTiming(DataBaseConnectionService.users, this.users, day, this.dayHours, this.turno.especialista);
+      var day = this.weekday[newDate.getDay()];
+      
+      console.log("TURNO HORARIOS", this.turnoHorarios);
+      await this.databaseConnection.bringDoctorTiming(DataBaseConnectionService.users, this.users, this.turnoHorarios, this.dayHours, this.turno.especialista);
       console.log("BROUGHT FROM DATABASE");
     }
   }
@@ -206,7 +207,7 @@ export class AltaComponent implements OnInit {
   emptyDating(){
     this.users = new Array();
     this.turno.hora = "";
-    this.getTiming();
+    //this.getTiming();
   }
 
   saveTime(doctorUser,hour){
@@ -245,5 +246,85 @@ export class AltaComponent implements OnInit {
   captchaResults(event){
     this.isCaptchaValid = event;
   }
+
+  //01/02/2020, [{doctor}, {doctor}]
+  // -> 7
+  // <String, Array()
+  turnoHorarios  = new Map();
+
+  selectEspecialidad(especialidad){
+    this.nowtime = new Date();
+    this.turnoHorarios = new Map();
+    this.listaHorarios = new Array();
+
+    this.emptyDating();
+    this.turno.especialista = especialidad;
+
+    var time = new Date();
+    var maxTime = new Date();
+    maxTime.setDate(this.nowtime.getDate() + 6);  
+    time.setDate(this.nowtime.getDate());
+
+    console.log("actual time", time);
+    console.log("maxTime time", maxTime);
+
+   // console.log("MAX TIME", maxTime);
+
+		while(time.getTime() <= maxTime.getTime() ) {
+      console.log("actual time", time);
+
+      var key = time.toDateString();
+      this.turnoHorarios.set(key, []);
+      this.listaHorarios.push(key);
+
+      time.setDate(time.getDate() + 1);  
+
+    }
+
+    console.log("this.turnoHorarios", this.turnoHorarios);
+
+    /*
+    this.turnoHorarios.forEach(element => {
+      this.listaHorarios.push(element);    
+    });
+
+    console.log("TURNO listaHorarios", this.turnoHorarios);
+    this.listaHorarios.sort();
+    console.log("TURNO listaHorarios", this.turnoHorarios);
+
+    console.log("TURNO HORARIOS WHILE", this.turnoHorarios);*/
+
+    this.getTiming();
+
+  }
+  listaHorarios = new Array();
+  nowtime = new Date();
+
+  next(){
+      this.turnoHorarios  = new Map();
+      this.listaHorarios = new Array();
+      this.emptyDating();
+      var maxTime = new Date();
+      var time = new Date();
+
+      this.nowtime.setDate(this.nowtime.getDate() + 6);
+      maxTime.setDate(this.nowtime.getDate() + 6);  
+      time.setDate(this.nowtime.getDate());     
+
+      console.log("actual time", time);
+      console.log("maxTime time", maxTime);
+  
+      while(time.getTime() <= maxTime.getTime() ) {
+        console.log("actual time", time);
+  
+        this.turnoHorarios.set(time.toDateString(), []);
+        this.listaHorarios.push(time.toDateString());
+
+        time.setDate(time.getDate() + 1);    
+      }
+  
+      this.getTiming();
+  
+    }
   
 }

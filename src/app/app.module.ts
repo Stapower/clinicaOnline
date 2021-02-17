@@ -41,7 +41,13 @@ import { MatFormFieldModule } from
     '@angular/material/form-field'; 
 import { MatNativeDateModule } from  
     '@angular/material/core';
-import { CaptchaComponentComponent } from './componentes/captcha-component/captcha-component.component'; 
+import { CaptchaComponentComponent } from './componentes/captcha-component/captcha-component.component';
+import { DirectivaDirective } from './directivas/directiva.directive';
+import { DatePipePipe } from './pipes/date-pipe.pipe';
+import { IsTurnoTakenDirective } from './directivas/isTurnoTaken/is-turno-taken.directive';
+import { AnimarDirective } from './directivas/animar.directive'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 PdfMakeWrapper.setFonts(pdfFonts);
 
 
@@ -61,7 +67,11 @@ PdfMakeWrapper.setFonts(pdfFonts);
     UploadImageComponent,
     ListaUsuarioComponent,
     GraficoComponent,
-    CaptchaComponentComponent
+    CaptchaComponentComponent,
+    DirectivaDirective,
+    DatePipePipe,
+    IsTurnoTakenDirective,
+    AnimarDirective
   ],
   imports: [
     BrowserModule,
@@ -78,7 +88,8 @@ PdfMakeWrapper.setFonts(pdfFonts);
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    BrowserAnimationsModule
    ],
   providers: [DataBaseConnectionService, LoginComponent, CaptchaValidationService, MatDatepickerModule],
   bootstrap: [AppComponent]

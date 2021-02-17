@@ -3,12 +3,54 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DataBaseConnectionService } from './../../../services/database-connection.service';
 import { getMaxListeners } from 'cluster';
 import { generateKeyPair } from 'crypto';
+import { trigger, transition, animate, style } from '@angular/animations'
+import { fadeInAnimation  } from '../../../../assets/animations';
 
 @Component({
 	selector: 'app-turno',
 	templateUrl: './turno.component.html',
-	styleUrls: ['./turno.component.css']
+	styleUrls: ['./turno.component.css'],
+	/*animations: [
+		trigger('slideInOut', [
+		  transition(':enter', [
+			style({transform: 'translateY(-100%)'}),
+			animate('200ms ease-in', style({transform: 'translateY(0%)'}))
+		  ]),
+		  transition(':leave', [
+			animate('200ms ease-in', style({transform: 'translateY(-100%)'}))
+		  ])
+		])
+	  ]*/
+	    // make slide in/out animation available to this component
+  animations: [fadeInAnimation,
+    trigger(
+      'inOutAnimation', 
+      [
+        transition(
+          ':enter', 
+          [style({ height: 0, opacity: 0 }),
+            animate('2s ease-in', 
+                    style({ height: 1000, opacity: 1 }))
+            
+          ]
+        ),
+        transition(
+          ':leave', 
+          [
+            style({ height: 0, opacity: 0 }),
+            animate('1s ease-out', 
+                    style({ height: 300, opacity: 1 }))
+          ]
+        )
+      ]
+    )
+  ],
+
+  // attach the slide in/out animation to the host (root) element of this component
+  host: { '[@fadeInAnimation]': '' }
 })
+
+
 export class TurnoComponent implements OnInit {
 	@Input() turno;
 	@Input() usuario;

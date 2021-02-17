@@ -212,385 +212,389 @@
 
 	</div -->
 
-<div *ngIf="turno" class="card mb-4 shadow-sm" style="background-color: #454d55">
-	<div class="card-header">
-		<h4 class="my-0 font-weight-normal">Nombre: {{turno.nombre}}</h4>
-	</div>
-
-	<div class="card-body">
-		<h1 class="card-title pricing-card-title"> Documento: {{turno.documento}} <small class="text-muted"></small>
-		</h1>
-
-
-		<ul class="list-unstyled mt-3 mb-4">
-			<li> Fecha de Turno: {{turno.fecha}} </li>
-		</ul>
-
-		<ul class="list-unstyled mt-3 mb-4">
-			<li> Descripcion :{{turno.descripcion}} </li>
-		</ul>
-
-		<ul class="list-unstyled mt-3 mb-4">
-			<li> Especialista :{{turno.especialista}} </li>
-		</ul>
-
-		<ul *ngIf="usuario.rol === 'Profesional'" class="list-unstyled mt-3 mb-4">
-			<li>Estado </li>
-			<select id="cars" name="tipo" [(ngModel)]="turno.estado">
-				<option value="{{p}}" *ngFor="let p of estados">{{p}}</option>
-			</select>
-		</ul>
-
-		<ul *ngIf="usuario.rol !== 'Profesional'" class="list-unstyled mt-3 mb-4">
-			<ul class="list-unstyled mt-3 mb-4">
-				<li> Estado: {{turno.estado}} </li>
-			</ul>
-		</ul>
-
-		<div *ngFor="let comentario of turno.comentarios">
-			<ul class="list-unstyled mt-3 mb-4">
-				<li> {{comentario.usuario.nombre}}: {{comentario.comentario}} </li>
-			</ul>
+<div  >
+	<div [@inOutAnimation] *ngIf="turno" class="card mb-4 shadow-sm" style="background-color: #454d55">
+		<div class="card-header">
+			<h4 class="my-0 font-weight-normal">Nombre: {{turno.nombre}}</h4>
 		</div>
 
+		<div class="card-body">
+			<h1 class="card-title pricing-card-title"> Documento: {{turno.documento}} <small class="text-muted"></small>
+			</h1>
 
-		<ul *ngIf = "usuario.rol != 'admin'"class="list-unstyled mt-3 mb-4">
-			<li> Agregar Comentario </li>
-			<textarea name="url" maxlength="280" name="name" [(ngModel)]="comentarioNuevo"> </textarea>
-		</ul>
 
-		<ul class="list-unstyled mt-3 mb-4">
-			<li> Edad: </li>
-			<input type="text" name="edad" maxlength="280" name="edad" [(ngModel)]="turno.edad"
-			[disabled]="usuario.rol !== 'Profesional'">
-		</ul>
+			<ul class="list-unstyled mt-3 mb-4">
+				<li> Fecha de Turno: {{turno.fecha}} </li>
+			</ul>
 
-		<ul class="list-unstyled mt-3 mb-4">
-			<li> Temperatura: </li>
-			<input type="text" name="temperatura" maxlength="280" name="temperatura" [(ngModel)]="turno.temperatura"
-			[disabled]="usuario.rol !== 'Profesional'">
-		</ul>
+			<ul class="list-unstyled mt-3 mb-4">
+				<li> Descripcion :{{turno.descripcion}} </li>
+			</ul>
 
-		<ul class="list-unstyled mt-3 mb-4">
-			<li> Presion: </li>
-			<input type="text" name="presion" maxlength="280" name="presion" [(ngModel)]="turno.presion"
+			<ul class="list-unstyled mt-3 mb-4">
+				<li> Especialista :{{turno.especialista}} </li>
+			</ul>
+
+			<ul *ngIf="usuario.rol === 'Profesional'" class="list-unstyled mt-3 mb-4">
+				<li>Estado </li>
+				<select id="cars" name="tipo" [(ngModel)]="turno.estado">
+					<option value="{{p}}" *ngFor="let p of estados">{{p}}</option>
+				</select>
+			</ul>
+
+			<ul *ngIf="usuario.rol !== 'Profesional'" class="list-unstyled mt-3 mb-4">
+				<ul class="list-unstyled mt-3 mb-4">
+					<li> Estado: {{turno.estado}} </li>
+				</ul>
+			</ul>
+
+			<div *ngFor="let comentario of turno.comentarios">
+				<ul class="list-unstyled mt-3 mb-4">
+					<li> {{comentario.usuario.nombre}}: {{comentario.comentario}} </li>
+				</ul>
+			</div>
+
+
+			<ul *ngIf = "usuario.rol != 'admin'"class="list-unstyled mt-3 mb-4">
+				<li> Agregar Comentario </li>
+				<textarea name="url" maxlength="280" name="name" [(ngModel)]="comentarioNuevo"> </textarea>
+			</ul>
+
+			<ul class="list-unstyled mt-3 mb-4">
+				<li> Edad: </li>
+				<input type="text" name="edad" maxlength="280" name="edad" [(ngModel)]="turno.edad"
 				[disabled]="usuario.rol !== 'Profesional'">
-		</ul>
-
-		<div *ngIf="usuario.rol !== 'Profesional'">
-			<ul class="list-unstyled mt-3 mb-4" *ngFor="let extra of turno.extras">
-				<li> {{extra.key}}: {{extra.value}} </li>
-			</ul>
-		</div>
-
-
-		<div *ngIf="usuario.rol === 'Profesional'">
-
-			<ul class="list-unstyled mt-3 mb-4" *ngFor="let extraGeneric of turno.genericDinamicFields">
-				<li ng-hide = "extraGeneric.key"> {{extraGeneric.key}} </li>	
-				<input ng-hide = "!extraGeneric.key" type="text" name="url" maxlength="280" name="extraDataValue" [(ngModel)]="extraGeneric.key">
-
-				<input type="text" name="url" maxlength="280" name="extraDataValue" [(ngModel)]="extraGeneric.value">
 			</ul>
 
 			<ul class="list-unstyled mt-3 mb-4">
-				<li> Agregar datos Genericos para futuras consultas</li>
-				<button class="plus-button plus-button--large" (click)="addDatosGenericos()"> + </button>
+				<li> Temperatura: </li>
+				<input type="text" name="temperatura" maxlength="280" name="temperatura" [(ngModel)]="turno.temperatura"
+				[disabled]="usuario.rol !== 'Profesional'">
 			</ul>
 
-		</div>
-
-		<div *ngIf="usuario.rol === 'Profesional'">
-
-			<ul class="list-unstyled mt-3 mb-4" *ngFor="let extra of turno.extras">
-
-				<input type="text" name="url" maxlength="280" name="extraDataKey" [(ngModel)]="extra.key">
-				<input type="text" name="url" maxlength="280" name="extraDataValue" [(ngModel)]="extra.value">
-
+			<ul class="list-unstyled mt-3 mb-4">
+				<li> Presion: </li>
+				<input type="text" name="presion" maxlength="280" name="presion" [(ngModel)]="turno.presion"
+					[disabled]="usuario.rol !== 'Profesional'">
 			</ul>
 
-			<ul class="list-unstyled mt-3 mb-4" *ngIf="(turno.extras != null && turno.extras.length < 3) || (turno.extras == null || turno.extras == 'undefined')">
-				<li> Agregar datos unicos de este turno (Maximo 3) </li>
-				<button class="plus-button plus-button--large" (click)="addExtra()"> + </button>
-			</ul>
-
-		</div>
-
-		<table *ngIf="this.turno.estado == 'Finalizado' && this.turno.cuestionario != null"
-			class="table table-hover table-dark" id="exportthis">
-			<thead>
-				<tr>
-					<th scope="col">Profesional</th>
-					<th scope="col">Cliente</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<tr>
-					<td>
-						<div id="full-stars-example-two">
-							<div class="rating-group">
-								<input disabled checked class="rating__input rating__input--none" name="rating3" id="rating3-none" value="0" type="radio" 
-								 [(ngModel)]="turno.ratingDelProfesionalAlPaciente" (click)="dejarResena()"
-								 [disabled]="usuario.rol !== 'Profesional'">
-								<label aria-label="1 star" class="rating__label" for="rating3-1"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-								<input class="rating__input" name="rating3" id="rating3-1" value="1" type="radio"
-								[(ngModel)]="turno.ratingDelProfesionalAlPaciente" (click)="dejarResena()"
-								[disabled]="usuario.rol !== 'Profesional'">
-								<label aria-label="2 stars" class="rating__label" for="rating3-2"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-								<input class="rating__input" name="rating3" id="rating3-2" value="2" type="radio"
-								[(ngModel)]="turno.ratingDelProfesionalAlPaciente" (click)="dejarResena()"
-								[disabled]="usuario.rol !== 'Profesional'">
-								<label aria-label="3 stars" class="rating__label" for="rating3-3"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-								<input class="rating__input" name="rating3" id="rating3-3" value="3" type="radio"
-								[(ngModel)]="turno.ratingDelProfesionalAlPaciente" (click)="dejarResena()"
-								[disabled]="usuario.rol !== 'Profesional'">
-								<label aria-label="4 stars" class="rating__label" for="rating3-4"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-								<input class="rating__input" name="rating3" id="rating3-4" value="4" type="radio"
-								[(ngModel)]="turno.ratingDelProfesionalAlPaciente" (click)="dejarResena()"
-								[disabled]="usuario.rol !== 'Profesional'">
-								<label aria-label="5 stars" class="rating__label" for="rating3-5"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-								<input class="rating__input" name="rating3" id="rating3-5" value="5" type="radio"
-								[(ngModel)]="turno.ratingDelProfesionalAlPaciente" (click)="dejarResena()"
-								[disabled]="usuario.rol !== 'Profesional'">
-							</div>
-						</div>
-					</td>
-
-					<td>
-						<div id="full-stars-example-two">
-							<div class="rating-group">
-								<input disabled checked class="rating__input rating__input--none" name="rating1" id="rating1-none" value="0" type="radio"
-								[(ngModel)]="turno.ratingDelPacienteAlProfesional" (click)="dejarResena()"
-								[disabled]="usuario.rol !== 'paciente'">
-								<label aria-label="1 star" class="rating__label" for="rating1-1"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-								<input class="rating__input" name="rating1" id="rating1-1" value="1" type="radio"
-								[(ngModel)]="turno.ratingDelPacienteAlProfesional" (click)="dejarResena()"
-								[disabled]="usuario.rol !== 'paciente'">
-								<label aria-label="2 stars" class="rating__label" for="rating1-2"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-								<input class="rating__input" name="rating1" id="rating1-2" value="2" type="radio"
-								[(ngModel)]="turno.ratingDelPacienteAlProfesional" (click)="dejarResena()"
-								[disabled]="usuario.rol !== 'paciente'">
-								<label aria-label="3 stars" class="rating__label" for="rating1-3"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-								<input class="rating__input" name="rating1" id="rating1-3" value="3" type="radio"
-								[(ngModel)]="turno.ratingDelPacienteAlProfesional" (click)="dejarResena()"
-								[disabled]="usuario.rol !== 'paciente'">
-								<label aria-label="4 stars" class="rating__label" for="rating1-4"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-								<input class="rating__input" name="rating1" id="rating1-4" value="4" type="radio"
-								[(ngModel)]="turno.ratingDelPacienteAlProfesional" (click)="dejarResena()"
-								[disabled]="usuario.rol !== 'paciente'">
-								<label aria-label="5 stars" class="rating__label" for="rating1-5"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-								<input class="rating__input" name="rating1" id="rating1-5" value="5" type="radio"
-								[(ngModel)]="turno.ratingDelPacienteAlProfesional" (click)="dejarResena()"
-								[disabled]="usuario.rol !== 'paciente'">
-							</div>
-						</div>
-					</td>
-				</tr>
+			<div *ngIf="usuario.rol !== 'Profesional'">
+				<ul class="list-unstyled mt-3 mb-4" *ngFor="let extra of turno.extras">
+					<li> {{extra.key}}: {{extra.value}} </li>
+				</ul>
+			</div>
 
 
+			<div *ngIf="usuario.rol === 'Profesional'">
 
+				<ul class="list-unstyled mt-3 mb-4" *ngFor="let extraGeneric of turno.genericDinamicFields">
+					<li ng-hide = "extraGeneric.key"> {{extraGeneric.key}} </li>	
+					<input ng-hide = "!extraGeneric.key" type="text" name="url" maxlength="280" name="extraDataValue" [(ngModel)]="extraGeneric.key">
 
-				<tr id="preguntaRespuesta del profesional">
-					<td>
-						<li> {{turno.cuestionario.cuestionarioProfesional[0].pregunta}}</li>
+					<input type="text" name="url" maxlength="280" name="extraDataValue" [(ngModel)]="extraGeneric.value">
+				</ul>
 
-						<div *ngIf="usuario.rol === 'Profesional'">
-							<input type="radio" id="pregunta1" name="pregunta1" value="Si"
-								[(ngModel)]="turno.cuestionario.cuestionarioProfesional[0].respuesta">
-							<label for="pregunta1">Si</label><br>
-							<input type="radio" id="pregunta1" name="pregunta1" value="No"
-								[(ngModel)]="turno.cuestionario.cuestionarioProfesional[0].respuesta">
-							<label for="pregunta1">No</label><br>
-						</div>
+				<ul class="list-unstyled mt-3 mb-4">
+					<li> Agregar datos Genericos para futuras consultas</li>
+					<button class="plus-button plus-button--large" (click)="addDatosGenericos()"> + </button>
+				</ul>
 
+			</div>
 
-						<div *ngIf="usuario.rol !== 'Profesional'">
-							<h5>{{turno.cuestionario.cuestionarioProfesional[0].respuesta}}</h5>
-						</div>
+			<div *ngIf="usuario.rol === 'Profesional'">
 
-					</td>
+				<ul class="list-unstyled mt-3 mb-4" *ngFor="let extra of turno.extras">
 
-					<td>
-						<li> {{turno.cuestionario.cuestionarioCliente[0].pregunta}}</li>
-						<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
-							<input type="radio" id="pregunta2" name="pregunta2" value="Si"
-								[(ngModel)]="turno.cuestionario.cuestionarioCliente[0].respuesta">
-							<label for="pregunta2">Si</label><br>
-							<input type="radio" id="pregunta2" name="pregunta2" value="No"
-								[(ngModel)]="turno.cuestionario.cuestionarioCliente[0].respuesta">
-							<label for="pregunta2">No</label><br>
-						</div>
+					<input type="text" name="url" maxlength="280" name="extraDataKey" [(ngModel)]="extra.key">
+					<input type="text" name="url" maxlength="280" name="extraDataValue" [(ngModel)]="extra.value">
 
-						<div *ngIf="usuario.rol == 'Profesional' || usuario.rol == 'admin'">
-							<h5>{{turno.cuestionario.cuestionarioCliente[0].respuesta}}</h5>
-						</div>
+				</ul>
 
-					</td>
+				<ul class="list-unstyled mt-3 mb-4" *ngIf="(turno.extras != null && turno.extras.length < 3) || (turno.extras == null || turno.extras == 'undefined')">
+					<li> Agregar datos unicos de este turno (Maximo 3) </li>
+					<button class="plus-button plus-button--large" (click)="addExtra()"> + </button>
+				</ul>
 
-				</tr>
-				<tr>
-					<td>
-						<li> {{turno.cuestionario.cuestionarioProfesional[1].pregunta}}</li>
+			</div>
 
-						<div *ngIf="usuario.rol === 'Profesional'">
-							<input type="radio" id="pregunta3" name="pregunta3" value="Si"
-								[(ngModel)]="turno.cuestionario.cuestionarioProfesional[1].respuesta">
-							<label for="pregunta3">Si</label><br>
-							<input type="radio" id="pregunta3" name="pregunta3" value="No"
-								[(ngModel)]="turno.cuestionario.cuestionarioProfesional[1].respuesta">
-							<label for="pregunta3">No</label><br>
-						</div>
+			<table *ngIf="this.turno.estado == 'Finalizado' && this.turno.cuestionario != null"
+				class="table table-hover table-dark" id="exportthis">
+				<thead>
+					<tr>
+						<th scope="col">Profesional</th>
+						<th scope="col">Cliente</th>
+					</tr>
+				</thead>
 
-						<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
-							<h5>{{turno.cuestionario.cuestionarioProfesional[1].respuesta}}</h5>
-						</div>
-
-					</td>
-
-
-					<td>
-						<li> {{turno.cuestionario.cuestionarioCliente[1].pregunta}} </li>
-						<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
-							<input type="radio" id="pregunta4" name="pregunta4" value="Si"
-								[(ngModel)]="turno.cuestionario.cuestionarioCliente[1].respuesta">
-							<label for="pregunta4">Si</label><br>
-							<input type="radio" id="pregunta4" name="pregunta4" value="No"
-								[(ngModel)]="turno.cuestionario.cuestionarioCliente[1].respuesta">
-							<label for="pregunta4">No</label><br>
-						</div>
-
-						<div *ngIf="usuario.rol === 'Profesional' || usuario.rol === 'admin'">
-							<h5>{{turno.cuestionario.cuestionarioCliente[1].respuesta}}</h5>
-						</div>
-					</td>
-				</tr>
-
-
-				<tr>
-					<td>
-						<li> Algun comentario extra?</li>
-						<div *ngIf="usuario.rol === 'Profesional'">
-							<textarea name="url" maxlength="280" name="name"
-								[(ngModel)]="turno.cuestionario.comentarioExtraProfesinoal"> </textarea>
-						</div>
-
-						<div *ngIf="usuario.rol !== 'Profesional'">
-							<h5>{{turno.cuestionario.comentarioExtraProfesinoal}}</h5>
-						</div>
-
-					</td>
-
-
-					<td>
-						<li> Algun comentario extra?</li>
-
-						<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
-							<textarea name="url" maxlength="280" name="name"
-								[(ngModel)]="turno.cuestionario.comentarioExtraCliente"> </textarea>
-						</div>
-
-						<div *ngIf="usuario.rol === 'Profesional' || usuario.rol == 'admin'">
-							<h5>{{turno.cuestionario.comentarioExtraCliente}}</h5>
-						</div>
-
-					</td>
-				</tr>
-
-
-					<tr *ngIf="turno.cuestionario.cuestionarioProfesional[2]">
+				<tbody>
+					<tr>
 						<td>
-
-								<li> {{turno.cuestionario.cuestionarioProfesional[2].pregunta}}</li>
-
-								<div *ngIf="usuario.rol === 'Profesional'">
-									<input type="range" 
-										[(ngModel)]="turno.cuestionario.cuestionarioProfesional[2].respuesta">
+							<div id="full-stars-example-two">
+								<div class="rating-group">
+									<input disabled checked class="rating__input rating__input--none" name="rating3" id="rating3-none" value="0" type="radio" 
+									[(ngModel)]="turno.ratingDelProfesionalAlPaciente" (click)="dejarResena()"
+									[disabled]="usuario.rol !== 'Profesional'">
+									<label aria-label="1 star" class="rating__label" for="rating3-1"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+									<input class="rating__input" name="rating3" id="rating3-1" value="1" type="radio"
+									[(ngModel)]="turno.ratingDelProfesionalAlPaciente" (click)="dejarResena()"
+									[disabled]="usuario.rol !== 'Profesional'">
+									<label aria-label="2 stars" class="rating__label" for="rating3-2"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+									<input class="rating__input" name="rating3" id="rating3-2" value="2" type="radio"
+									[(ngModel)]="turno.ratingDelProfesionalAlPaciente" (click)="dejarResena()"
+									[disabled]="usuario.rol !== 'Profesional'">
+									<label aria-label="3 stars" class="rating__label" for="rating3-3"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+									<input class="rating__input" name="rating3" id="rating3-3" value="3" type="radio"
+									[(ngModel)]="turno.ratingDelProfesionalAlPaciente" (click)="dejarResena()"
+									[disabled]="usuario.rol !== 'Profesional'">
+									<label aria-label="4 stars" class="rating__label" for="rating3-4"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+									<input class="rating__input" name="rating3" id="rating3-4" value="4" type="radio"
+									[(ngModel)]="turno.ratingDelProfesionalAlPaciente" (click)="dejarResena()"
+									[disabled]="usuario.rol !== 'Profesional'">
+									<label aria-label="5 stars" class="rating__label" for="rating3-5"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+									<input class="rating__input" name="rating3" id="rating3-5" value="5" type="radio"
+									[(ngModel)]="turno.ratingDelProfesionalAlPaciente" (click)="dejarResena()"
+									[disabled]="usuario.rol !== 'Profesional'">
 								</div>
-
-								<div *ngIf="usuario.rol !== 'Profesional'">
-									<input type="range" 
-										[(ngModel)]="turno.cuestionario.cuestionarioCliente[2].respuesta" disabled>
-								</div>
-
-
+							</div>
 						</td>
 
-
 						<td>
-							<li> {{turno.cuestionario.cuestionarioCliente[2].pregunta}} </li>
-							<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
-								<input type="range"
-									[(ngModel)]="turno.cuestionario.cuestionarioCliente[2].respuesta">
+							<div id="full-stars-example-two">
+								<div class="rating-group">
+									<input disabled checked class="rating__input rating__input--none" name="rating1" id="rating1-none" value="0" type="radio"
+									[(ngModel)]="turno.ratingDelPacienteAlProfesional" (click)="dejarResena()"
+									[disabled]="usuario.rol !== 'paciente'">
+									<label aria-label="1 star" class="rating__label" for="rating1-1"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+									<input class="rating__input" name="rating1" id="rating1-1" value="1" type="radio"
+									[(ngModel)]="turno.ratingDelPacienteAlProfesional" (click)="dejarResena()"
+									[disabled]="usuario.rol !== 'paciente'">
+									<label aria-label="2 stars" class="rating__label" for="rating1-2"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+									<input class="rating__input" name="rating1" id="rating1-2" value="2" type="radio"
+									[(ngModel)]="turno.ratingDelPacienteAlProfesional" (click)="dejarResena()"
+									[disabled]="usuario.rol !== 'paciente'">
+									<label aria-label="3 stars" class="rating__label" for="rating1-3"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+									<input class="rating__input" name="rating1" id="rating1-3" value="3" type="radio"
+									[(ngModel)]="turno.ratingDelPacienteAlProfesional" (click)="dejarResena()"
+									[disabled]="usuario.rol !== 'paciente'">
+									<label aria-label="4 stars" class="rating__label" for="rating1-4"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+									<input class="rating__input" name="rating1" id="rating1-4" value="4" type="radio"
+									[(ngModel)]="turno.ratingDelPacienteAlProfesional" (click)="dejarResena()"
+									[disabled]="usuario.rol !== 'paciente'">
+									<label aria-label="5 stars" class="rating__label" for="rating1-5"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
+									<input class="rating__input" name="rating1" id="rating1-5" value="5" type="radio"
+									[(ngModel)]="turno.ratingDelPacienteAlProfesional" (click)="dejarResena()"
+									[disabled]="usuario.rol !== 'paciente'">
+								</div>
 							</div>
-
-							<div *ngIf="usuario.rol === 'Profesional' || usuario.rol == 'admin'">
-								<input type="range" 
-								[(ngModel)]="turno.cuestionario.cuestionarioProfesional[2].respuesta" disabled>						</div>
 						</td>
 					</tr>
 
-					<tr *ngIf="turno.cuestionario.cuestionarioProfesional[3]">
+
+
+
+					<tr id="preguntaRespuesta del profesional">
 						<td>
-							<li> {{turno.cuestionario.cuestionarioProfesional[3].pregunta}}</li>
+							<li> {{turno.cuestionario.cuestionarioProfesional[0].pregunta}}</li>
 
 							<div *ngIf="usuario.rol === 'Profesional'">
-								<input type="number" 
-									[(ngModel)]="turno.cuestionario.cuestionarioProfesional[3].respuesta">
+								<input type="radio" id="pregunta1" name="pregunta1" value="Si"
+									[(ngModel)]="turno.cuestionario.cuestionarioProfesional[0].respuesta">
+								<label for="pregunta1">Si</label><br>
+								<input type="radio" id="pregunta1" name="pregunta1" value="No"
+									[(ngModel)]="turno.cuestionario.cuestionarioProfesional[0].respuesta">
+								<label for="pregunta1">No</label><br>
+							</div>
+
+
+							<div *ngIf="usuario.rol !== 'Profesional'">
+								<h5>{{turno.cuestionario.cuestionarioProfesional[0].respuesta}}</h5>
+							</div>
+
+						</td>
+
+						<td>
+							<li> {{turno.cuestionario.cuestionarioCliente[0].pregunta}}</li>
+							<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
+								<input type="radio" id="pregunta2" name="pregunta2" value="Si"
+									[(ngModel)]="turno.cuestionario.cuestionarioCliente[0].respuesta">
+								<label for="pregunta2">Si</label><br>
+								<input type="radio" id="pregunta2" name="pregunta2" value="No"
+									[(ngModel)]="turno.cuestionario.cuestionarioCliente[0].respuesta">
+								<label for="pregunta2">No</label><br>
+							</div>
+
+							<div *ngIf="usuario.rol == 'Profesional' || usuario.rol == 'admin'">
+								<h5>{{turno.cuestionario.cuestionarioCliente[0].respuesta}}</h5>
+							</div>
+
+						</td>
+
+					</tr>
+					<tr>
+						<td>
+							<li> {{turno.cuestionario.cuestionarioProfesional[1].pregunta}}</li>
+
+							<div *ngIf="usuario.rol === 'Profesional'">
+								<input type="radio" id="pregunta3" name="pregunta3" value="Si"
+									[(ngModel)]="turno.cuestionario.cuestionarioProfesional[1].respuesta">
+								<label for="pregunta3">Si</label><br>
+								<input type="radio" id="pregunta3" name="pregunta3" value="No"
+									[(ngModel)]="turno.cuestionario.cuestionarioProfesional[1].respuesta">
+								<label for="pregunta3">No</label><br>
+							</div>
+
+							<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
+								<h5>{{turno.cuestionario.cuestionarioProfesional[1].respuesta}}</h5>
+							</div>
+
+						</td>
+
+
+						<td>
+							<li> {{turno.cuestionario.cuestionarioCliente[1].pregunta}} </li>
+							<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
+								<input type="radio" id="pregunta4" name="pregunta4" value="Si"
+									[(ngModel)]="turno.cuestionario.cuestionarioCliente[1].respuesta">
+								<label for="pregunta4">Si</label><br>
+								<input type="radio" id="pregunta4" name="pregunta4" value="No"
+									[(ngModel)]="turno.cuestionario.cuestionarioCliente[1].respuesta">
+								<label for="pregunta4">No</label><br>
+							</div>
+
+							<div *ngIf="usuario.rol === 'Profesional' || usuario.rol === 'admin'">
+								<h5>{{turno.cuestionario.cuestionarioCliente[1].respuesta}}</h5>
+							</div>
+						</td>
+					</tr>
+
+
+					<tr>
+						<td>
+							<li> Algun comentario extra?</li>
+							<div *ngIf="usuario.rol === 'Profesional'">
+								<textarea name="url" maxlength="280" name="name"
+									[(ngModel)]="turno.cuestionario.comentarioExtraProfesinoal"> </textarea>
 							</div>
 
 							<div *ngIf="usuario.rol !== 'Profesional'">
-								<input type="number" 
-									[(ngModel)]="turno.cuestionario.cuestionarioProfesional[3].respuesta" disabled>
+								<h5>{{turno.cuestionario.comentarioExtraProfesinoal}}</h5>
 							</div>
 
 						</td>
 
 
 						<td>
-							<li> {{turno.cuestionario.cuestionarioCliente[3].pregunta}} </li>
+							<li> Algun comentario extra?</li>
+
 							<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
-								<input type="number"
-									[(ngModel)]="turno.cuestionario.cuestionarioCliente[3].respuesta">
+								<textarea name="url" maxlength="280" name="name"
+									[(ngModel)]="turno.cuestionario.comentarioExtraCliente"> </textarea>
 							</div>
 
 							<div *ngIf="usuario.rol === 'Profesional' || usuario.rol == 'admin'">
-								<input type="number" 
-								[(ngModel)]="turno.cuestionario.cuestionarioCliente[3].respuesta" disabled>						</div>
+								<h5>{{turno.cuestionario.comentarioExtraCliente}}</h5>
+							</div>
+
 						</td>
 					</tr>
 
 
-			</tbody>
-		</table>
+						<tr *ngIf="turno.cuestionario.cuestionarioProfesional[2]">
+							<td>
 
-	
-		<div >
-			<!--*ngIf="usuario.rol === 'Profesional'"-->
-			<ul class="list-unstyled mt-3 mb-4" *ngFor="let foto of turno.fotos">
+									<li> {{turno.cuestionario.cuestionarioProfesional[2].pregunta}}</li>
 
-				<li *ngIf="foto"><img src="{{foto}}" width="250px" height="150px"></li>
+									<div *ngIf="usuario.rol === 'Profesional'">
+										<input type="range" 
+											[(ngModel)]="turno.cuestionario.cuestionarioProfesional[2].respuesta">
+									</div>
 
+									<div *ngIf="usuario.rol !== 'Profesional'">
+										<input type="range" 
+											[(ngModel)]="turno.cuestionario.cuestionarioProfesional[2].respuesta" disabled>
+									</div>
+
+
+							</td>
+
+
+							<td>
+								<li> {{turno.cuestionario.cuestionarioCliente[2].pregunta}} </li>
+								<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
+									<input type="range"
+										[(ngModel)]="turno.cuestionario.cuestionarioCliente[2].respuesta">
+								</div>
+
+								<div *ngIf="usuario.rol === 'Profesional' || usuario.rol == 'admin'">
+									<input type="range" 
+									[(ngModel)]="turno.cuestionario.cuestionarioCliente[2].respuesta" disabled>	
+								</div>
+
+							</td>
+						</tr>
+
+						<tr *ngIf="turno.cuestionario.cuestionarioProfesional[3]">
+							<td>
+								<li> {{turno.cuestionario.cuestionarioProfesional[3].pregunta}}</li>
+
+								<div *ngIf="usuario.rol === 'Profesional'">
+									<input type="number" 
+										[(ngModel)]="turno.cuestionario.cuestionarioProfesional[3].respuesta">
+								</div>
+
+								<div *ngIf="usuario.rol !== 'Profesional'">
+									<input type="number" 
+										[(ngModel)]="turno.cuestionario.cuestionarioProfesional[3].respuesta" disabled>
+								</div>
+
+							</td>
+
+
+							<td>
+								<li> {{turno.cuestionario.cuestionarioCliente[3].pregunta}} </li>
+								<div *ngIf="usuario.rol !== 'Profesional' && usuario.rol !== 'admin'">
+									<input type="number"
+										[(ngModel)]="turno.cuestionario.cuestionarioCliente[3].respuesta">
+								</div>
+
+								<div *ngIf="usuario.rol === 'Profesional' || usuario.rol == 'admin'">
+									<input type="number" 
+									[(ngModel)]="turno.cuestionario.cuestionarioCliente[3].respuesta" disabled>						</div>
+							</td>
+						</tr>
+
+
+				</tbody>
+			</table>
+
+		
+			<div >
+				<!--*ngIf="usuario.rol === 'Profesional'"-->
+				<ul class="list-unstyled mt-3 mb-4" *ngFor="let foto of turno.fotos">
+
+					<li *ngIf="foto"><img src="{{foto}}" width="250px" height="150px"></li>
+
+				</ul>
+			</div>
+
+			<app-upload-image *ngIf="usuario.rol != 'admin'" (imageUrl)="saveUrl($event)"></app-upload-image>
+
+			<ul>
+				<app-captcha-component *ngIf="usuario.rol != 'admin'" [usuario]=usuario (captchaResult)="captchaResults($event)"> </app-captcha-component>
 			</ul>
+
+
+
+
+			<ul *ngIf="isCaptchaValid" class="list-unstyled mt-3 mb-4">
+				<button type="button" class="btn btn-lg btn-block btn-primary" (click)="guardar()">Guardar turno</button>
+			</ul>
+
+			<ul *ngIf="usuario.rol !== 'Profesional' && turno.estado !== 'Finalizado' && isCaptchaValid" class="list-unstyled mt-3 mb-4">
+				<button type="button" class="btn btn-lg btn-block btn-primary" (click)="cancelar()">Cancelar turno</button>
+			</ul>
+
+
 		</div>
-
-		<app-upload-image *ngIf="usuario.rol != 'admin'" (imageUrl)="saveUrl($event)"></app-upload-image>
-
-		<ul>
-			<app-captcha-component *ngIf="usuario.rol != 'admin'" [usuario]=usuario (captchaResult)="captchaResults($event)"> </app-captcha-component>
-		</ul>
-
-
-
-
-		<ul *ngIf="isCaptchaValid" class="list-unstyled mt-3 mb-4">
-			<button type="button" class="btn btn-lg btn-block btn-primary" (click)="guardar()">Guardar turno</button>
-		</ul>
-
-		<ul *ngIf="usuario.rol !== 'Profesional' && turno.estado !== 'Finalizado' && isCaptchaValid" class="list-unstyled mt-3 mb-4">
-			<button type="button" class="btn btn-lg btn-block btn-primary" (click)="cancelar()">Cancelar turno</button>
-		</ul>
-
-
 	</div>
 </div>
