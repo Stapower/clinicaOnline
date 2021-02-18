@@ -14,10 +14,36 @@ import { Subscription } from "rxjs";
 //import {JuegoServiceService} from "../../servicios/juego-service.service";
 //import {FirebaseAuth} from '../../clases/firebase-auth'
 import { FirebaseAuth } from '../../clases/firebase-auth';
+import { trigger, transition, animate, style } from '@angular/animations'
+
+
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.css']
+	styleUrls: ['./login.component.css'],
+	animations: [
+		trigger(
+		  'inOutAnimation', 
+		  [
+			transition(
+			  ':enter', 
+			  [style({ width: 2000, opacity: 0 }),
+				animate('1s ease-in', 
+						style({ width: 2000, opacity: 1 }))
+				
+			  ]
+			),
+			transition(
+			  ':leave', 
+			  [
+				style({ height: 0, opacity: 0 }),
+				animate('1s ease-out', 
+						style({ height: 300, opacity: 1 }))
+			  ]
+			)
+		  ]
+		)
+	  ]
 })
 export class LoginComponent implements OnInit {
 

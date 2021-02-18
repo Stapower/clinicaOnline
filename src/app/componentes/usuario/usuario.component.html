@@ -1,93 +1,93 @@
-<div class="card mb-4 shadow-sm">
+<div class="card mb-4 shadow-sm" [@inOutAnimation] >
 	<div class="card-header">
-		<h4 class="my-0 font-weight-normal">Modificar Usuario</h4>
+		<h4 class="my-0 font-weight-normal">{{"Modificar Usuario@" + leng | translate}}</h4>
 		<form class="form-style-7">
 			<ul>
 
 				<li *ngIf="!usuario.medico">
-					<label for="name"> Es medico? </label>
+					<label for="name"> {{"Es medico?@" + leng | translate}} </label>
 					<input type="radio" id="pregunta1" name="pregunta1" value="Si" [(ngModel)]="usuario.medico">
-					Soy medico
+					{{"Soy medico@" + leng | translate}}
 					<input type="radio" id="pregunta2" name="pregunta2" value="false" [(ngModel)]="usuario.medico">
-					Soy paciente
+					{{"Soy paciente@" + leng | translate}}
 				</li>
 
 				<li *ngIf="usuarioLoggeado.rol == 'admin' && usuario.medico">
-					<label for="name"> Confirmacion </label>
+					<label for="name"> {{"Confirmacion@" + leng | translate}} </label>
 
 					<input type="radio" id="pregunta3" name="pregunta3" value="true" [(ngModel)]="usuario.isActivated">
-					Es medico.
+					{{"Es medico@" + leng | translate}}
 					<input type="radio" id="pregunta4" name="pregunta4" value="false" [(ngModel)]="usuario.isActivated">
-					No es medico.
+					{{"No es medico@" + leng | translate}}
 
-					<span style="color:red"> Confirmacion </span>
+					<span style="color:red"> {{"Confirmacion@" + leng | translate}} </span>
 
 				</li>
 
 				<li>
-					<label for="name"> Apellido </label>
+					<label for="name">{{"Apellido@" + leng | translate}}</label>
 					<input type="text" name="apellido" [(ngModel)]="usuario.apellido">
-					<span>Apellido</span>
+					<span>{{"Apellido@" + leng | translate}}</span>
 				</li>
 
 				<li>
-					<label for="name"> Nombre </label>
+					<label for="name"> {{"Nombre@" + leng | translate}} </label>
 					<input type="text" name="nombre"  [(ngModel)]="usuario.nombre">
-					<span>Nombre</span>
+					<span>{{"Nombre@" + leng | translate}}</span>
 				</li>
 
 				<li *ngIf="whenScreenLoadsDocumento != null">
-					<label for="Documento">Documento</label>
+					<label for="Documento">{{"Documento@" + leng | translate}}</label>
 					<input type="text" name="documento" [(ngModel)]="usuario.documento" readonly>
-					<span>Documento</span>
+					<span>{{"Documento@" + leng | translate}}</span>
 				</li>
 
 				<li *ngIf="whenScreenLoadsDocumento == null">
-					<label for="Documento2">Documento</label>
+					<label for="Documento2">{{"Documento@" + leng | translate}}</label>
 					<input type="text" name="Documento2" [(ngModel)]="usuario.documento">
-					<span>Documento</span>
+					<span>{{"Documento@" + leng | translate}}</span>
 				</li>
 
 				<li *ngIf="usuario.rol == 'Profesional'">
-					<label for="tipo">Especialidad</label>
+					<label for="tipo">{{"Especialidad@" + leng | translate}}</label>
 					<select id="cars" name="Especialidad" [(ngModel)]="usuario.especialista">
-						<option value="{{p.nombre}}" *ngFor="let p of especialistas">{{p.nombre}}</option>
+						<option value="{{p.nombre}}" *ngFor="let p of especialistas">{{p.nombre + "@" + leng | translate}}</option>
 					</select>
 				</li>
 
 				<li *ngIf="usuario.especialista == 'Otra Especialidad'">
-					<label for="especialidad2">Especialidad</label>
+					<label for="especialidad2">{{"Especialidad@" + leng | translate}}</label>
 					<input type="text" name="especialidad2" [(ngModel)]="especialdadDistinta">
-					<span>Especialidad</span>
+					<span>{{"Especialidad@" + leng | translate}}</span>
 				</li>
 
 				<li>
-					<label for="url">email</label>
+					<label for="url">{{"email@" + leng | translate}}</label>
 					<textarea name="url" maxlength="280"  [(ngModel)]="usuario.email" readonly> </textarea>
-					<span>email</span>
+					<span>{{"email@" + leng | translate}}</span>
 				</li>
 
 				<li *ngIf="usuarioLoggeado.rol == 'admin'">
-					<label for="rol">Rol</label>
+					<label for="rol">{{"Rol@" + leng | translate}}</label>
 					<select id="rol" name="rol" [(ngModel)]="usuario.rol">
-						<option value="{{rol}}" *ngFor="let rol of roles">{{rol}}</option>
+						<option value="{{rol + '@' + leng | translate}}}}" *ngFor="let rol of roles">{{rol + "@" + leng | translate}}</option>
 					</select>
 				</li>
 
 				<div id="weekdaysSelectedValues" [hidden]="usuario.rol !== 'Profesional'">
 					<ul class="weekdays-list">
-						<li data-day="0" id="weekday-Dom" class="weekdays-day " (click)="select($event)">Dom</li>
-						<li data-day="1" id="weekday-Lun" class="weekdays-day " (click)="select($event)">Lun</li>
-						<li data-day="2" id="weekday-Mar" class="weekdays-day " (click)="select($event)">Mar</li>
-						<li data-day="3" id="weekday-Mie" class="weekdays-day " (click)="select($event)">Mie</li>
-						<li data-day="4" id="weekday-Jue" class="weekdays-day " (click)="select($event)">Jue</li>
-						<li data-day="5" id="weekday-Vie" class="weekdays-day " (click)="select($event)">Vie</li>
-						<li data-day="6" id="weekday-Sab" class="weekdays-day " (click)="select($event)">Sab</li>
+						<li data-day="0" id="weekday-Dom" class="weekdays-day " (click)="select($event)">{{"Dom@" + leng | translate}}</li>
+						<li data-day="1" id="weekday-Lun" class="weekdays-day " (click)="select($event)">{{"Lun@" + leng | translate}}</li>
+						<li data-day="2" id="weekday-Mar" class="weekdays-day " (click)="select($event)">{{"Mar@" + leng | translate}}</li>
+						<li data-day="3" id="weekday-Mie" class="weekdays-day " (click)="select($event)">{{"Mie@" + leng | translate}}</li>
+						<li data-day="4" id="weekday-Jue" class="weekdays-day " (click)="select($event)">{{"Jue@" + leng | translate}}</li>
+						<li data-day="5" id="weekday-Vie" class="weekdays-day " (click)="select($event)">{{"Vie@" + leng | translate}}</li>
+						<li data-day="6" id="weekday-Sab" class="weekdays-day " (click)="select($event)">{{"Sab@" + leng | translate}}</li>
 					</ul>
 				</div>
 
 				<li *ngIf="usuario.rol == 'Profesional'">
-					<label for="tipo">Horario de trabajo</label>
+					<label for="tipo">{{"Horario de trabajo@" + leng | translate}}</label>
 
 					<select id="cars" name="horarioDesde" [(ngModel)]="usuario.horarioDesde">
 						<option value="{{p}}" *ngFor="let p of horarios">{{p}}</option>
@@ -100,7 +100,7 @@
 
 				<!--span>No hay presupuesto para spinner, primero dar de alta la pelicula y despues seleccionar el turno (darle unos segundos por las llamadas a BD)</!--span-->
 				<li>
-					<button type="button" class="btn btn-lg btn-block btn-primary" (click)="guardar()">Gurdar</button>
+					<button type="button" class="btn btn-lg btn-block btn-primary" (click)="guardar()">{{"Guardar@" + leng | translate}}</button>
 				</li>
 			</ul>
 		</form>

@@ -12,31 +12,31 @@
 
 <div class="card mb-4 shadow-sm">
 	<div class="card-header">
-		<h4 class="my-0 font-weight-normal">Alta de Turno</h4>
+		<h4 class="my-0 font-weight-normal">{{"Alta de Turno@" + leng | translate}}</h4>
 		<form class="form-style-7">
 			<ul>
 				<li>
-					<label for="name"> Paciente </label>
+					<label for="name"> {{"Paciente@" + leng | translate}} </label>
 					<input type="text" name="name" value="{{turno.nombre}}" disabled readonly>
-					<span>Nombre del paciente</span>
+					<span>{{"Nombre del paciente@" + leng | translate}}</span>
 				</li>
 				<li>
-					<label for="name">Documento</label>
+					<label for="name">{{"Documento@" + leng | translate}}</label>
 					<input type="text" name="name" [(ngModel)]="turno.documento" disabled readonly>
-					<span>Documento</span>
+					<span>{{"Documento@" + leng | translate}}</span>
 				</li>
 
 				<li>
-					<label for="url">Descripcion</label>
+					<label for="url">{{"Descripcion@" + leng | translate}}</label>
 					<textarea name="url" maxlength="280" [(ngModel)]="turno.descripcion"> </textarea>
-					<span>Descripcion</span>
+					<span>{{"Descripcion@" + leng | translate}}</span>
 				</li>
 
 				<li>
-					<label for="tipo">Especialista</label>
+					<label for="tipo">{{"Especialista@" + leng | translate}}</label>
 					<br>
 					<button *ngFor="let p of especialistas" class="btn btn-success" (click)="selectEspecialidad(p.nombre)">
-						{{p.nombre}} </button>
+						{{p.nombre + "@" + leng | translate}} </button>
 				</li>
 
 				<!--li>
@@ -52,13 +52,13 @@
 
 				<div *ngIf="turnoHorarios != null && turnoHorarios !== undefined && listaHorarios != null && listaHorarios != undefined">
 					<div *ngFor="let key of listaHorarios">
-						<p> Turno para el dia: {{key | datePipe}} </p>
+						<p> {{"Turno para el dia@" + leng | translate}}: {{key | datePipe }} </p>
 						
 						<div *ngIf="turnoHorarios.get(key) != null">
 							<div *ngFor="let doctor of turnoHorarios.get(key)">
-								<p [appDirectiva]="doctor"> Doctor: {{doctor.nombre}}, {{doctor.apellido}}</p>
+								<p [appDirectiva]="doctor"> {{"Doctor@" + leng | translate}}: {{doctor.nombre}}, {{doctor.apellido}}</p>
 								<!--[appIsTurnoTaken]="key + '@' + hour + '@' + doctor.documento"-->
-								<button *ngFor="let hour of doctor.hoursTime"  class="btn btn-success" (click)="saveTime(doctor, hour)">
+								<button *ngFor="let hour of doctor.hoursTime"  class="btn btn-success" (click)="saveTime(doctor, hour, key)">
 									{{hour}} </button>
 							</div>
 						</div>
@@ -80,13 +80,13 @@
 				-->
 				
 				<button class="btn btn-success" (click)=next()>
-					Siguiente semana </button>
+					{{"Siguiente semana@" + leng | translate}} </button>
 				<ul>
-					<app-captcha-component (captchaResult)="captchaResults($event)"> </app-captcha-component>
+					<app-captcha-component [leng]=leng (captchaResult)="captchaResults($event)"> </app-captcha-component>
 				</ul>
 				<ul>
 					<li *ngIf="isCaptchaValid">
-						<button type="button" class="btn btn-lg btn-blopck btn-primary" (click)="crear()">Alta</button>
+						<button type="button" class="btn btn-lg btn-blopck btn-primary" (click)="crear()">{{"Alta@" + leng | translate}}</button>
 					</li>
 				</ul>
 			</ul>

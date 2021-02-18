@@ -54,6 +54,8 @@ import { fadeInAnimation  } from '../../../../assets/animations';
 export class TurnoComponent implements OnInit {
 	@Input() turno;
 	@Input() usuario;
+	@Input() leng;
+
 	@Output() turnoGurdado = new EventEmitter();
 
 	constructor(public databaseConnection: DataBaseConnectionService) {

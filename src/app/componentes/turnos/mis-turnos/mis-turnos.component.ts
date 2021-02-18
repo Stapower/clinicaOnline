@@ -13,6 +13,8 @@ export class MisTurnosComponent implements OnInit {
 
 	@Output() turnoSeleccionado = new EventEmitter();
 	@Input() usuario;
+	@Input() leng = "ES";
+
 
 
 	turnos = [];

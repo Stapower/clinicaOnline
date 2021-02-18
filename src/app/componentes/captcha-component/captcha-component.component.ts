@@ -6,7 +6,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./captcha-component.component.css']
 })
 export class CaptchaComponentComponent implements OnInit {
-	@Input() usuario;
+  @Input() usuario;
+  @Input() leng;
+
   @Output() captchaResult = new EventEmitter();
   
   constructor() { }

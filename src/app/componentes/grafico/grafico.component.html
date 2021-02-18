@@ -18,7 +18,7 @@
 	<input type="date" [(ngModel)]="filterEndDate">
 </div>
 
-<div *ngIf="encuesta">
+<div *ngIf="encuesta" >
 	<label for="tipo">Encuestas</label>
 	<select id="cars" name="tipo" [(ngModel)]="encuestaSelected" (change)="showGraphic('resultadoEncuesta')">
 		<option value="{{p}}" *ngFor="let p of Cuestionario">{{p}}</option>

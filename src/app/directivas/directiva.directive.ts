@@ -8,7 +8,7 @@ export class DirectivaDirective {
   @Input()
   set appDirectiva(doctor: any) {
     var color;
-    if(doctor.hoursTime.length <= 3 && doctor.hoursTime.length <= 1){
+    if(doctor.hoursTime.length <= 3 && doctor.hoursTime.length >= 1){
       color = "yellow";
     }
     else if(doctor.hoursTime.length == 0){

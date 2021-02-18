@@ -1,5 +1,7 @@
 import { CaptchaValidationService } from './services/captcha-validation.service';
 import { DataBaseConnectionService } from './services/database-connection.service';
+import { GoogletranslateService } from './services/googletranslate/googletranslate.service';
+
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -47,6 +49,9 @@ import { DatePipePipe } from './pipes/date-pipe.pipe';
 import { IsTurnoTakenDirective } from './directivas/isTurnoTaken/is-turno-taken.directive';
 import { AnimarDirective } from './directivas/animar.directive'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {HttpClient} from '@angular/common/http';
+import { TranslatePipe } from './pipes/translate/translate.pipe';
 
 PdfMakeWrapper.setFonts(pdfFonts);
 
@@ -71,7 +76,8 @@ PdfMakeWrapper.setFonts(pdfFonts);
     DirectivaDirective,
     DatePipePipe,
     IsTurnoTakenDirective,
-    AnimarDirective
+    AnimarDirective,
+    TranslatePipe
   ],
   imports: [
     BrowserModule,
@@ -91,7 +97,11 @@ PdfMakeWrapper.setFonts(pdfFonts);
     MatButtonToggleModule,
     BrowserAnimationsModule
    ],
-  providers: [DataBaseConnectionService, LoginComponent, CaptchaValidationService, MatDatepickerModule],
+  providers: [DataBaseConnectionService, LoginComponent, CaptchaValidationService, MatDatepickerModule, GoogletranslateService/*, TranslateHttpLoader*/],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+// required for AOT compilation
+/*export function HttpLoaderFactory(http: HttpClient) {
+  //return new TranslateHttpLoader(http, './../assets/i18n/', '.json');
+}*/

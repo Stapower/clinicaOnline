@@ -18,13 +18,6 @@
 
 <!--router-outlet></!--router-outlet-->
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 
 <script>
 	function print(){
@@ -43,82 +36,108 @@
 }
 </script>
 
-<html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-	<body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/css/bootstrap-select.min.css">
 
-		<div class="topnav">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/css/flag-icon.min.css">
 
-			<a class="btn" id="home" (click)="referTo('')">Home</a>
-			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'paciente'" class="btn" (click)="referTo('alta')">Alta Turno</a>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+<html >
+	<div id="home2" [@inOutAnimation]>
+
+		<!--h2> {{"HOME@" + leng | translate}}</!--h2-->
+
+		<body >
+
+			<div class="topnav">
+
+				<a class="btn" id="home" (click)="referTo('')"> {{"Home@" + leng | translate}}</a>
+				<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'paciente'" class="btn" (click)="referTo('alta')">{{"Alta Turno@" + leng | translate}}</a>
+				
+				<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'" class="btn" (click)="referTo('listaTurnos')">{{"Lista Turnos@" + leng | translate}}</a>
+
+				<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol != 'admin' "class="btn" (click)="referTo('misTurnos')">{{"Mis Turnos@" + leng | translate}}</a>
+				<!--(loggedUser[0].medico == 'Si' && loggedUser[0].isActivated == 'true')-->
+
+				<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'"class="btn" (click)="referTo('listaUsuarios')">{{"Lista Usuarios@" + leng | translate}}</a>
+
+				<div class="login-container">
+					<div *ngIf="!loggedUser[0] && false">
+						<input type="text" placeholder="Username" [(ngModel)]="user.email" name="username">
+						<input type="password" placeholder="Password" [(ngModel)]="user.password" name="psw">
+						<input type="submit" name="Login" value="Login" (click)="Entrar2()" class="login-submit" />
+					</div>
+					<div *ngIf="loggedUser[0]">
+						<h4> {{"Bienvenido@" + leng | translate}} {{loggedUser[0].nombre}} </h4>
+						<img class="gb_Ia gbii"
+							src ="{{loggedUser[0].foto}}"
+							srcset="{{loggedUser[0].foto}} 1x, {{loggedUser[0].foto}} 2x "
+							alt="" aria-hidden="true"
+							(click)="referToWithUser('perfil', loggedUser[0])">
+					</div>
+
+					<button *ngIf="loggedUser[0]" type="button" class="btn btn-default btn-sm logoutLblPos" (click)="LogOut()">
+						<span class="glyphicon glyphicon-log-out" ></span> {{"Log out@" + leng | translate}}
+					</button>
+
+
+
+					<!--a class="btn" href="login">LogOut</~a-->
+
+				</div>
+			</div>
 			
-			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'" class="btn" (click)="referTo('listaTurnos')">Lista Turnos</a>
+			<button style="background: url(https://lipis.github.io/flag-icon-css/flags/4x3/it.svg)" (click)="lenguage('IT')">Italy</button>
+			<button style="background: url(https://lipis.github.io/flag-icon-css/flags/4x3/fr.svg)" (click)="lenguage('FR')">French</button>
+			<button style="background: url(https://lipis.github.io/flag-icon-css/flags/4x3/um.svg)" (click)="lenguage('EN')">English</button>
+			<button style="background: url(https://lipis.github.io/flag-icon-css/flags/4x3/ar.svg)" (click)="lenguage('ES')">Spanish</button>
+			<button style="background: url(https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/1200px-Flag_of_Brazil.svg.png)" (click)="lenguage('BR')">Portugues</button>
 
-			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol != 'admin' "class="btn" (click)="referTo('misTurnos')">Mis Turnos</a>
-			<!--(loggedUser[0].medico == 'Si' && loggedUser[0].isActivated == 'true')-->
+			<div *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'">
+				<button class="btn" onClick="print()"><i class="fa fa-download"></i> {{"Download@" + leng | translate}}</button>
+			</div>
 
-			<a *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'"class="btn" (click)="referTo('listaUsuarios')">Lista Usuarios</a>
+		</body>
 
-			<div class="login-container">
-				<div *ngIf="!loggedUser[0] && false">
-					<input type="text" placeholder="Username" [(ngModel)]="user.email" name="username">
-					<input type="password" placeholder="Password" [(ngModel)]="user.password" name="psw">
-					<input type="submit" name="Login" value="Login" (click)="Entrar2()" class="login-submit" />
-				</div>
-				<div *ngIf="loggedUser[0]">
-					<h4> Bienvenido: {{loggedUser[0].nombre}} </h4>
-					<img class="gb_Ia gbii"
-						src ="{{loggedUser[0].foto}}"
-						srcset="{{loggedUser[0].foto}} 1x, {{loggedUser[0].foto}} 2x "
-						alt="" aria-hidden="true"
-						(click)="referToWithUser('perfil', loggedUser[0])">
-				</div>
+		<div *ngIf="loggedUser[0]">
+			<div id="alta" [hidden]="showMe != 'alta'">
+				<app-alta [leng]=leng [cliente]=loggedUser[0] (turnoGuardadoOutput)="referTo('misTurnos')"></app-alta>
+			</div>
 
-				<!--a class="btn" href="login">LogOut</~a-->
-				<button *ngIf="loggedUser[0]" type="button" class="btn btn-default btn-sm logoutLblPos" (click)="LogOut()">
-					<span class="glyphicon glyphicon-log-out" ></span> Log out
-				</button>
+			<div id="listaTurnos" [hidden]="showMe != 'listaTurnos'">
+				<app-listado [rol]=loggedUser[0].rol (turnoSeleccionado)="seleccionDeTurno($event)"></app-listado>
+			</div>
+			
+			<div  id="turno" [hidden]="showMe != 'turno'">
+				<app-turno [leng] =leng [usuario]=loggedUser[0] (turnoGurdado)=turnoGuardado()  [turno]=turno></app-turno>
+			</div>
+
+			<div id="misTurnos" [hidden]="showMe != 'misTurnos'">
+				<app-mis-turnos [usuario]=loggedUser[0] [leng]=leng (turnoSeleccionado)="seleccionDeTurno($event)"></app-mis-turnos>
+			</div>
+
+			<div id="perfil" *ngIf="showMe == 'perfil'">
+				<app-usuario [leng]=leng  [usuario]=usuario [usuarioLoggeado]=loggedUser[0]></app-usuario>
+			</div>
+
+			<div id="listaUsuarios" [hidden]="showMe != 'listaUsuarios'">
+				<app-lista-usuario [usuario]=loggedUser[0] (usuarioSeleccionado)="seleccionDeUsuario($event)"></app-lista-usuario>
 			</div>
 		</div>
-		
-		<div *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'">
-			<button class="btn" onClick="print()"><i class="fa fa-download"></i> Download</button>
-		</div>
 
-	</body>
+		<app-grafico *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'"></app-grafico>
 
-	<div *ngIf="loggedUser[0]">
-		<div id="alta" [hidden]="showMe != 'alta'">
-			<app-alta [cliente]=loggedUser[0] (turnoGuardadoOutput)="referTo('misTurnos')"></app-alta>
-		</div>
+		<div id="snackbar">{{Mensajes}}</div>
 
-		<div id="listaTurnos" [hidden]="showMe != 'listaTurnos'">
-			<app-listado [rol]=loggedUser[0].rol (turnoSeleccionado)="seleccionDeTurno($event)"></app-listado>
-		</div>
-		
-		<div  id="turno" [hidden]="showMe != 'turno'">
-			<app-turno [usuario]=loggedUser[0] (turnoGurdado)=turnoGuardado()  [turno]=turno></app-turno>
-		</div>
+		<div class="underlay-photo"></div>
+		<div class="underlay-black"></div>
 
-		<div id="misTurnos" [hidden]="showMe != 'misTurnos'">
-			<app-mis-turnos [usuario]=loggedUser[0] (turnoSeleccionado)="seleccionDeTurno($event)"></app-mis-turnos>
-		</div>
-
-		<div id="perfil" *ngIf="showMe == 'perfil'">
-			<app-usuario [usuario]=usuario [usuarioLoggeado]=loggedUser[0]></app-usuario>
-		</div>
-
-		<div id="listaUsuarios" [hidden]="showMe != 'listaUsuarios'">
-			<app-lista-usuario [usuario]=loggedUser[0] (usuarioSeleccionado)="seleccionDeUsuario($event)"></app-lista-usuario>
-		</div>
+		<router-outlet></router-outlet>
 	</div>
-
-	<app-grafico *ngIf ="loggedUser[0] != null && loggedUser[0].rol == 'admin'"></app-grafico>
-
-	<div id="snackbar">{{Mensajes}}</div>
-
-	<div class="underlay-photo"></div>
-	<div class="underlay-black"></div>
-
-	<router-outlet></router-outlet>
 </html>

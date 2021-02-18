@@ -12,10 +12,11 @@ import * as XLSX from 'xlsx';
 import { ClientRequest } from 'http';
 import { IfStmt } from '@angular/compiler';
 
+
 @Component({
 	selector: 'app-grafico',
 	templateUrl: './grafico.component.html',
-	styleUrls: ['./grafico.component.css']
+	styleUrls: ['./grafico.component.css'],
 })
 export class GraficoComponent implements OnInit {
 
@@ -153,7 +154,7 @@ export class GraficoComponent implements OnInit {
 						array.push({ "y": turnosPorEspecialidad[element], "label": element });
 					});
 
-					this.generateChart("Operaciones Por Especialidad", array);
+					this.generateChart("Turnos Y especialidades", array);
 				});
 				break;
 			
@@ -262,7 +263,7 @@ export class GraficoComponent implements OnInit {
 						array.push({ "y": turnosPorEspecialidad[element], "label": element });
 					});
 
-					this.generateChart("Turnos por dia", array);
+					this.generateChart("Turnos Medicos", array);
 				});
 				
 				//var turnosPorEspecialidad = new Map<String, String>();
@@ -333,7 +334,7 @@ export class GraficoComponent implements OnInit {
 						array.push({ "y": medicoDias[element], "label": element });
 					});
 
-					this.generateChart("Turnos por dia", array);
+					this.generateChart("Dias de trabajo", array);
 				});
 				
 				//var turnosPorEspecialidad = new Map<String, String>();

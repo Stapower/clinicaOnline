@@ -1,32 +1,32 @@
-<input type="text" placeholder="Buscar..." (keyup)="enter($event)" [(ngModel)]="filterString">
+<input type="text" (keyup)="enter($event)" [(ngModel)]="filterString">
 
 <table class="table table-hover table-dark">
 	<thead>
 	  <tr>
 		<th scope="col">#</th>
-		<th class="thFilter" scope="col" (click)="orderBy('Especialidad')">Especialidad</th>
-		<th class="thFilter" scope="col" (click)="orderBy('Fecha')">Fecha</th>
-		<th class="thFilter" scope="col" (click)="orderBy('Nombre')">Nombre del medico</th>
-		<th scope="col">Documento</th>
-		<th scope="col">Foto</th>
-		<th scope="col">Estado</th>
-		<th scope="col">Ir a detalles</th>
+		<th class="thFilter" scope="col" (click)="orderBy('Especialidad')">{{"Especialidad@" + leng | translate}}</th>
+		<th class="thFilter" scope="col" (click)="orderBy('Fecha')">{{"Fecha@" + leng | translate}}</th>
+		<th class="thFilter" scope="col" (click)="orderBy('Nombre')">{{"Nombre del medico@" + leng | translate}}</th>
+		<th scope="col">{{"Documento@" + leng | translate}}</th>
+		<th scope="col">{{"Foto@" + leng | translate}}</th>
+		<th scope="col">{{"Estado@" + leng | translate}}</th>
+		<th scope="col">{{"Ir a detalles@" + leng | translate}}</th>
 	  </tr>
 	</thead>
 	<tbody>
 	  <tr *ngFor="let turno of turnos; let index=index; let odd=odd; let even=even;">
 		<th scope="row">{{index+1}}</th>
 		
-		<td>{{turno.especialista}}</td>
-		<td>{{turno.fecha}}</td>
+		<td>{{turno.especialista + "@" + leng | translate}}</td>
+		<td>{{turno.fecha + "@" + leng | translate}}</td>
 		<td *ngIf="turno.asignado != null">{{turno.asignado.apellido}}, {{turno.asignado.nombre}}</td>
-		<td *ngIf="turno.asignado == null"> Turno aun no asignado </td>
-		<td>{{turno.documento}}</td>
+		<td *ngIf="turno.asignado == null"> {{"Turno aun no asignado@" + leng | translate}}</td>
+		<td>{{turno.documento + "@" + leng | translate}}</td>
 		<td *ngIf="turno.cliente"><img src="{{turno.cliente.foto}}" width="250px" height="150px"></td>
 		<td *ngIf="!turno.cliente"><img src="https://firebasestorage.googleapis.com/v0/b/tpclinicaonline.appspot.com/o/40490.svg?alt=media&token=a762dbd7-69eb-45c7-9f5d-9e8ae1e6c1f4" width="250px" height="150px"></td>
 		<!-->//<-->
-		<td style="color:aquamarine">{{turno.estado}}</td>
-		<td>	<button type="button" class="btn btn-lg btn-block btn-primary" (click)="seleccionar(turno)">Seleccionar</button>
+		<td style="color:aquamarine">{{turno.estado + "@" + leng | translate}}</td>
+		<td>	<button type="button" class="btn btn-lg btn-block btn-primary" (click)="seleccionar(turno)">{{"Seleccionar@" + leng | translate}}</button>
 		</td>
 	  </tr>
 	</tbody>

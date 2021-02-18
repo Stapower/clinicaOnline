@@ -3,15 +3,42 @@ import { element } from 'protractor';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { hasLifecycleHook } from '@angular/compiler/src/lifecycle_reflector';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { trigger, transition, animate, style } from '@angular/animations'
 
 @Component({
 	selector: 'app-usuario',
 	templateUrl: './usuario.component.html',
-	styleUrls: ['./usuario.component.css']
+	styleUrls: ['./usuario.component.css'],
+	animations: [
+		trigger(
+		  'inOutAnimation', 
+		  [
+			transition(
+			  ':enter', 
+			  [style({ width: 0, opacity: 0 }),
+				animate('1s ease-in', 
+						style({ width: 2000, opacity: 1 }))
+				
+			  ]
+			),
+			transition(
+			  ':leave', 
+			  [
+				style({ height: 0, opacity: 0 }),
+				animate('1s ease-out', 
+						style({ height: 300, opacity: 1 }))
+			  ]
+			)
+		  ]
+		)
+	  ]
 })
+
 export class UsuarioComponent implements OnInit {
 
 	@Input() usuario;
+	@Input() leng;
+
 	@Input() usuarioLoggeado;
 	@Output() usuarioGuardado = new EventEmitter();
 

@@ -2,19 +2,48 @@ import { Paciente } from './../../clases/paciente';
 import { DataBaseConnectionService } from './../../services/database-connection.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap, CanActivate } from '@angular/router';
+import { trigger, transition, animate, style } from '@angular/animations'
+//import {TranslateService} from '@ngx-translate/core';
 
-
-
+//import { ..., GoogleObj } from "./models/solution";
+import { GoogletranslateService, GoogleObj } from "../../services/googletranslate/googletranslate.service";
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  animations: [
+	trigger(
+	  'inOutAnimation', 
+	  [
+		transition(
+		  ':enter', 
+		  [style({ width: 2000, opacity: 0 }),
+			animate('1s ease-in', 
+					style({ width: 2000, opacity: 1 }))
+			
+		  ]
+		),
+		transition(
+		  ':leave', 
+		  [
+			style({ height: 0, opacity: 0 }),
+			animate('1s ease-out', 
+					style({ height: 300, opacity: 1 }))
+		  ]
+		)
+	  ]
+	)
+  ]
 })
 export class HomeComponent implements OnInit, OnDestroy, CanActivate {
 
   constructor(	private router: Router, 
-				private databaseConnection: DataBaseConnectionService
+				private databaseConnection: DataBaseConnectionService,
+				//private translate: TranslateService,
+				private google: GoogletranslateService
 	) {
+        //translate.setDefaultLang('en');
 
 		this.navigationSubscription = this.router.events.subscribe((e: any) => {
 			// If it is a NavigationEnd event re-initalise the component
@@ -38,6 +67,32 @@ export class HomeComponent implements OnInit, OnDestroy, CanActivate {
 		}
 
 		return true;
+	}
+
+	leng = "ES";
+
+	lenguage(v){
+		this.leng = v;
+	}
+	
+	translateNow(){
+
+		const googleObj: GoogleObj = {
+			q: ["hello"],
+			target: "es",
+			source: "en",
+			format :"plain-text",
+			model : "base"
+		};
+
+		//this.translateBtn.disabled = true;
+		this.google.translate(googleObj).subscribe( (res: any) => {
+			this.translateBtn.disabled = false;
+			console.log(res.data.translations[0].translatedText)
+		},
+		err => {
+			console.log(err);
+		});
 	}
 
 
@@ -81,9 +136,12 @@ export class HomeComponent implements OnInit, OnDestroy, CanActivate {
 		}
 	}
 
+	translateBtn;
   ngOnInit(): void {
 
 		this.reloadUser();
+		this.translateBtn = document.getElementById("translatebtn");
+
 		
 		/*this.router.events.subscribe( i => {
 			this.reloadUser();
@@ -138,6 +196,7 @@ export class HomeComponent implements OnInit, OnDestroy, CanActivate {
 
 	switch (value) {
 		case "misTurnos":
+			this.turno = null;
 			var e = document.getElementById(value);
 			//console.log(e);
 			e.classList.add("w3-animate-top");
@@ -169,6 +228,34 @@ export class HomeComponent implements OnInit, OnDestroy, CanActivate {
 			var e = document.getElementById(value);
 			//console.log(e);
 			e.classList.add("w3-animate-bottom");
+		break;
+		case "":
+			var e = document.getElementById("home2");
+			//console.log(e);
+			var flagRight = false;
+			var flagLeft = false;
+
+			e.classList.forEach(element => {
+				console.log("HOME CLASS", element);
+				if(element == "w3-animate-right"){
+					flagRight = true;
+				}
+				else if(element == "w3-animate-left"){
+					flagLeft = true;
+				}
+			});
+
+			if(flagRight){
+				e.classList.replace("w3-animate-right", "w3-animate-left");
+			}
+			else if(flagLeft){
+				e.classList.replace("w3-animate-left","w3-animate-right");
+			}
+			else{
+				e.classList.add("w3-animate-right");
+			}
+			
+
 		break;
 
 	}

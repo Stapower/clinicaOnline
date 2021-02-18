@@ -580,7 +580,7 @@
 			<app-upload-image *ngIf="usuario.rol != 'admin'" (imageUrl)="saveUrl($event)"></app-upload-image>
 
 			<ul>
-				<app-captcha-component *ngIf="usuario.rol != 'admin'" [usuario]=usuario (captchaResult)="captchaResults($event)"> </app-captcha-component>
+				<app-captcha-component *ngIf="usuario.rol != 'admin'" [leng] = leng [usuario]=usuario (captchaResult)="captchaResults($event)"> </app-captcha-component>
 			</ul>
 
 

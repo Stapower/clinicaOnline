@@ -20,6 +20,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 export class AltaComponent implements OnInit {
 
   @Input() cliente;
+  @Input() leng;
   @Output() turnoGuardadoOutput = new EventEmitter();
   
   constructor(public databaseConnection : DataBaseConnectionService) {
@@ -210,7 +211,8 @@ export class AltaComponent implements OnInit {
     //this.getTiming();
   }
 
-  saveTime(doctorUser,hour){
+  saveTime(doctorUser,hour, time){
+    this.turno.fecha = new Date(time).toString();
     this.turno.hora = hour;
     this.turno.asignado = doctorUser;
   }
