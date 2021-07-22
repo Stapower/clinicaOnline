@@ -37,7 +37,7 @@
     "pdfmake-wrapper": "^2.1.1",
     "rxjs": "^6.5.5",
     "tslib": "^1.14.1",
-    "xlsx": "^0.16.9",
+    "xlsx": "^0.17.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
